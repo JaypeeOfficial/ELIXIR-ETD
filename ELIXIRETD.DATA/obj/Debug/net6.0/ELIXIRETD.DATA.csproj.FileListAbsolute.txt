@@ -1,0 +1,14 @@
+C:\Users\jobidos\source\repos\ELIXIRETD.API\ELIXIRETD.DATA\bin\Debug\net6.0\ELIXIRETD.DATA.deps.json
+C:\Users\jobidos\source\repos\ELIXIRETD.API\ELIXIRETD.DATA\bin\Debug\net6.0\ELIXIRETD.DATA.runtimeconfig.json
+C:\Users\jobidos\source\repos\ELIXIRETD.API\ELIXIRETD.DATA\bin\Debug\net6.0\ELIXIRETD.DATA.dll
+C:\Users\jobidos\source\repos\ELIXIRETD.API\ELIXIRETD.DATA\bin\Debug\net6.0\ELIXIRETD.DATA.pdb
+C:\Users\jobidos\source\repos\ELIXIRETD.API\ELIXIRETD.DATA\obj\Debug\net6.0\ELIXIRETD.DATA.csproj.AssemblyReference.cache
+C:\Users\jobidos\source\repos\ELIXIRETD.API\ELIXIRETD.DATA\obj\Debug\net6.0\ELIXIRETD.DATA.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jobidos\source\repos\ELIXIRETD.API\ELIXIRETD.DATA\obj\Debug\net6.0\ELIXIRETD.DATA.AssemblyInfoInputs.cache
+C:\Users\jobidos\source\repos\ELIXIRETD.API\ELIXIRETD.DATA\obj\Debug\net6.0\ELIXIRETD.DATA.AssemblyInfo.cs
+C:\Users\jobidos\source\repos\ELIXIRETD.API\ELIXIRETD.DATA\obj\Debug\net6.0\ELIXIRETD.DATA.csproj.CoreCompileInputs.cache
+C:\Users\jobidos\source\repos\ELIXIRETD.API\ELIXIRETD.DATA\obj\Debug\net6.0\ELIXIRETD.DATA.dll
+C:\Users\jobidos\source\repos\ELIXIRETD.API\ELIXIRETD.DATA\obj\Debug\net6.0\refint\ELIXIRETD.DATA.dll
+C:\Users\jobidos\source\repos\ELIXIRETD.API\ELIXIRETD.DATA\obj\Debug\net6.0\ELIXIRETD.DATA.pdb
+C:\Users\jobidos\source\repos\ELIXIRETD.API\ELIXIRETD.DATA\obj\Debug\net6.0\ELIXIRETD.DATA.genruntimeconfig.cache
+C:\Users\jobidos\source\repos\ELIXIRETD.API\ELIXIRETD.DATA\obj\Debug\net6.0\ref\ELIXIRETD.DATA.dll
