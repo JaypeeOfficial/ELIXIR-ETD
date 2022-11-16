@@ -11,6 +11,8 @@ namespace ELIXIRETD.DATA.CORE.ICONFIGURATION
     {
         IUserRepository Users { get; }
 
+        IRoleRepository Roles { get; }
+
         Task CompleteAsync();
     }
 }

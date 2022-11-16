@@ -102,6 +102,72 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
             return true;
         }
 
-    
+
+        //--------------DEPARTMENT
+
+
+        public async Task<IReadOnlyList<DepartmentDto>> GetAllActiveDepartment()
+        {
+            return await _context.Departments.Select(x => new DepartmentDto
+            {
+                Id = x.Id,
+                DepartmentName = x.DepartmentName,
+                AddedBy = x.AddedBy,
+                DateAdded = x.DateAdded.ToString("MM/dd/yyyy")
+
+            }).Where(x => x.IsActive == true)
+              .ToListAsync();
+            
+        }
+
+        public async Task<IReadOnlyList<DepartmentDto>> GetAllInActiveDepartment()
+        {
+            return await _context.Departments.Select(x => new DepartmentDto
+            {
+                Id = x.Id,
+                DepartmentName = x.DepartmentName,
+                AddedBy = x.AddedBy,
+                DateAdded = x.DateAdded.ToString("MM/dd/yyyy")
+
+            }).Where(x => x.IsActive == false)
+           .ToListAsync();
+        }
+
+        public async Task<bool> AddNewDepartment(Department department)
+        {
+            await _context.Departments.AddAsync(department);
+            return true;
+        }
+
+        public async Task<bool> UpdateDepartment(Department department)
+        {
+                var dep = await _context.Departments.Where(x => x.Id == department.Id)
+                                                    .FirstOrDefaultAsync();
+
+            dep.DepartmentName = department.DepartmentName;
+
+            return true;
+
+        }
+
+        public async Task<bool> InActiveDepartment(Department department)
+        {
+           var dep = await _context.Departments.Where(x => x.Id == department.Id)
+                                               .FirstOrDefaultAsync();
+
+            dep.IsActive = false;
+
+            return true;
+        }
+
+        public async Task<bool> ActivateDepartment(Department department)
+        {
+            var dep = await _context.Departments.Where(x => x.Id == department.Id)
+                                           .FirstOrDefaultAsync();
+
+            dep.IsActive = true;
+
+            return true;
+        }
     }
 }

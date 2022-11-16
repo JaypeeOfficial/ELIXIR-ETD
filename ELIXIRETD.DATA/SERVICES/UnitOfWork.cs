@@ -16,12 +16,16 @@ namespace ELIXIRETD.DATA.SERVICES
 
         public IUserRepository Users { get; private set; }
 
+        public IRoleRepository Roles { get; private set; }
+
 
         public UnitOfWork(StoreContext context)
   
         {
+            _context = context;
 
             Users = new UserRepository(_context);
+            Roles = new RoleRepository(_context);
 
         }
 
