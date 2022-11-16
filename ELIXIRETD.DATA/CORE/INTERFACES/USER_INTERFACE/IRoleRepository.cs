@@ -14,9 +14,9 @@ namespace ELIXIRETD.DATA.CORE.INTERFACES.USER_INTERFACE
         Task<IReadOnlyList<RoleDto>> GetAllActiveRoles();
         Task<IReadOnlyList<RoleDto>> GetAllInActiveRoles();
         Task<bool> AddNewRole(UserRole role);
-        Task<bool> UpdateUserInfo(UserRole role);
-        Task<bool> InActiveUser(UserRole role);
-        Task<bool> ActivateUser(UserRole role);
+        Task<bool> UpdateRoleInfo(UserRole role);
+        Task<bool> InActiveRole(UserRole role);
+        Task<bool> ActivateRole(UserRole role);
 
 
     }

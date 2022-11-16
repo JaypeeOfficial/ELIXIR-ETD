@@ -55,7 +55,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
             return true;
         }
 
-        public async Task<bool> UpdateUserInfo(UserRole role)
+        public async Task<bool> UpdateRoleInfo(UserRole role)
         {
             var existingRole = await _context.Roles.Where(x => x.Id == role.Id)
                                                    .FirstOrDefaultAsync();
@@ -67,7 +67,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
         }
 
 
-        public async Task<bool> ActivateUser(UserRole role)
+        public async Task<bool> ActivateRole(UserRole role)
         {
             var roles = await _context.Roles.Where(x => x.Id == role.Id)
                                             .FirstOrDefaultAsync();
@@ -78,7 +78,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
 
         }
 
-        public async Task<bool> InActiveUser(UserRole role)
+        public async Task<bool> InActiveRole(UserRole role)
         {
             var roles = await _context.Roles.Where(x => x.Id == role.Id)
                                           .FirstOrDefaultAsync();

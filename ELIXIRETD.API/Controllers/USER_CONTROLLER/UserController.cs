@@ -69,5 +69,62 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
             return Ok("Successfully activate user!");
         }
 
+
+
+        //------------DEPARTMENT
+
+        [HttpGet]
+        [Route("GetAllActiveDepartment")]
+        public async Task<IActionResult> GetAllActiveDepartment()
+        {
+            var dep = await _unitOfWork.Users.GetAllActiveDepartment();
+
+            return Ok(dep);
+        }
+
+        [HttpPost]
+        [Route("AddNewDepartment")]
+        public async Task<IActionResult> AddNewDepartment(Department department)
+        {
+
+            await _unitOfWork.Users.AddNewDepartment(department);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(department);
+        }
+
+        [HttpPut]
+        [Route("UpdateDepartment")]
+        public async Task<IActionResult> UpdateDepartment([FromBody] Department department)
+        {
+            await _unitOfWork.Users.UpdateDepartment(department);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok("Successfully updated!");
+        }
+
+
+        [HttpPut]
+        [Route("InActiveDepartment")]
+        public async Task<IActionResult> InActiveDepartment([FromBody] Department department)
+        {
+            await _unitOfWork.Users.InActiveDepartment(department);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok("Successfully inactive department!");
+        }
+
+
+        [HttpPut]
+        [Route("ActivateDepartment")]
+        public async Task<IActionResult> ActivateDepartment([FromBody] Department department)
+        {
+            await _unitOfWork.Users.InActiveDepartment(department);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok("Successfully activate department!");
+        }
+
+
     }
 }

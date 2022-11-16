@@ -58,6 +58,8 @@ builder.Services.AddCors(options =>
 
 
 builder.Services.AddTransient(typeof(IUserService), typeof(UserService));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
 var app = builder.Build();
 
