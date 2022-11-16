@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HWW6f6fxvD1Bj0Q6FeUxloH/qfW+7S1Jewcg3JHTzt3c1QdjHCyx/zvrwexslntPF+bzk9/cl6j71rsS6p1m1w==",
+  "dgSpecHash": "kOHCN97Ivcvsz+s95NMPXP/0qnnkjC8RbvW9JuvdVo3cXskkeVLV4jBLtcg1DKgAFo+dzkBVp3R+7iQPxEvcWQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jobidos\\source\\repos\\ELIXIRETD.API\\ELIXIRETD.API\\ELIXIRETD.API.csproj",
+  "projectFilePath": "C:\\Users\\jobidos\\Desktop\\MY ELIXIR ETD\\ELIXIRETD.API\\ELIXIRETD.API\\ELIXIRETD.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jobidos\\.nuget\\packages\\fluentvalidation\\11.2.1\\fluentvalidation.11.2.1.nupkg.sha512",
     "C:\\Users\\jobidos\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.2.2\\fluentvalidation.aspnetcore.11.2.2.nupkg.sha512",

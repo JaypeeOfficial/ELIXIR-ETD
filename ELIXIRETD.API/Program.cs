@@ -1,5 +1,5 @@
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.STORE_CONTEXT;
-using ELIXIRETD.DATA.ICONFIGURATION;
+using ELIXIRETD.DATA.CORE.ICONFIGURATION;
 using ELIXIRETD.DATA.SERVICES;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;

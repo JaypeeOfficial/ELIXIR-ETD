@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ELIXIRETD.DATA.ICONFIGURATION
+namespace ELIXIRETD.DATA.CORE.ICONFIGURATION
 {
     public interface IUserService
     {

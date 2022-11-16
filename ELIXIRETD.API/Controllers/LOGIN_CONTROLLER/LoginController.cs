@@ -1,4 +1,4 @@
-﻿using ELIXIRETD.DATA.ICONFIGURATION;
+﻿using ELIXIRETD.DATA.CORE.ICONFIGURATION;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ELIXIRETD.DATA.JWT.AUTHENTICATION;

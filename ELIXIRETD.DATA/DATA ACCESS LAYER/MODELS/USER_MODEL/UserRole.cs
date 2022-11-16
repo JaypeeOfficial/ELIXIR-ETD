@@ -13,7 +13,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL
         public bool IsActive { get; set; } = true;
         public DateTime DateAdded { get; set; } = DateTime.Now;
         public string AddedBy { get; set; }
-
+        public string Reason { get; set; }
+        public DateTime? DateModified { get; set; }
 
 
     }
