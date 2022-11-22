@@ -169,5 +169,35 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
 
             return true;
         }
+
+        public async Task<bool> ValidateRoleId(int id)
+        {
+            var roles = await _context.Roles.FindAsync(id);
+
+            if (roles == null)
+                return false;
+
+            return true;
+        }
+
+        public async Task<bool> ValidateDepartmentId(int id)
+        {
+            var department = await _context.Departments.FindAsync(id);
+
+            if (department == null)
+                return false;
+
+            return true;
+        }
+
+        public async Task<bool> ValidateUserExist(string username)
+        {
+            return await _context.Users.AnyAsync(x => x.UserName == username);
+        }
+
+        public async Task<bool> ValidateDepartmentCodeExist(string code)
+        {
+            return await _context.Departments.AnyAsync(x => x.DepartmentCode == code);
+        }
     }
 }

@@ -32,6 +32,19 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
         public async Task<IActionResult> AddNewUser(User user)
         {
 
+            var getRoleId = await _unitOfWork.Users.ValidateRoleId(user.UserRoleId);
+            var getDepId = await _unitOfWork.Users.ValidateDepartmentId(user.DepartmentId);
+
+            if (await _unitOfWork.Users.ValidateUserExist(user.UserName))
+                return BadRequest("Username already exist, Please try something else!");
+
+            if (getRoleId == false)
+                return BadRequest("Role doesn't exist, Please input data first!");
+
+            if (getDepId == false)
+                return BadRequest("Department doesn't exist, Please input data first!");
+
+
             await _unitOfWork.Users.AddNewUser(user);
             await _unitOfWork.CompleteAsync();
 
@@ -86,6 +99,9 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
         [Route("AddNewDepartment")]
         public async Task<IActionResult> AddNewDepartment(Department department)
         {
+
+            if (await _unitOfWork.Users.ValidateDepartmentCodeExist(department.DepartmentCode))
+                return BadRequest("Department code already exist, please try something else!");
 
             await _unitOfWork.Users.AddNewDepartment(department);
             await _unitOfWork.CompleteAsync();

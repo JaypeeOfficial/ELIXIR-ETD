@@ -88,6 +88,9 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
             return true;
         }
 
-   
+        public async Task<bool> ValidateRoleExist(string role)
+        {
+            return await _context.Roles.AnyAsync(x => x.RoleName == role);
+        }
     }
 }

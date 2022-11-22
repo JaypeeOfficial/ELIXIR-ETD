@@ -31,6 +31,10 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
         public async Task<IActionResult> AddNewRole(UserRole role)
         {
 
+            if (await _unitOfWork.Roles.ValidateRoleExist(role.RoleName))
+                return BadRequest("Role already exist, please try something else!");
+
+
             await _unitOfWork.Roles.AddNewRole(role);
             await _unitOfWork.CompleteAsync();
 
@@ -46,7 +50,6 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
 
             return Ok("Successfully updated roles!");
         }
-
 
 
         [HttpPut]
