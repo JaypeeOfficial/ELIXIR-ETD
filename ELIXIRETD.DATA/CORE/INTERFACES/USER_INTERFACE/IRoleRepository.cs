@@ -17,7 +17,6 @@ namespace ELIXIRETD.DATA.CORE.INTERFACES.USER_INTERFACE
         Task<bool> UpdateRoleInfo(UserRole role);
         Task<bool> InActiveRole(UserRole role);
         Task<bool> ActivateRole(UserRole role);
-
         Task<bool> ValidateRoleExist(string role); 
 
 

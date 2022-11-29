@@ -22,29 +22,31 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
 
         public async Task<IReadOnlyList<RoleDto>> GetAllActiveRoles()
         {
-            return await _context.Roles.Select(x => new RoleDto
-            {
-                Id = x.Id,
-                RoleName = x.RoleName,
-                AddedBy = x.AddedBy,
-                DateAdded = x.DateAdded.ToString("MM/dd/yyyy")
+            var roles = _context.Roles.Where(x => x.IsActive == true)
+                                      .Select(x => new RoleDto
+                                      {
+                                          Id = x.Id,
+                                          RoleName = x.RoleName,
+                                          AddedBy = x.AddedBy,
+                                          DateAdded = x.DateAdded.ToString("MM/dd/yyyy")
 
-            }).Where(x => x.IsActive == true)
-              .ToListAsync();
-            
+                                      });
+            return await roles.ToListAsync();
+
         }
 
         public async Task<IReadOnlyList<RoleDto>> GetAllInActiveRoles()
         {
-            return await _context.Roles.Select(x => new RoleDto
-            {
-                Id = x.Id,
-                RoleName = x.RoleName,
-                AddedBy = x.AddedBy,
-                DateAdded = x.DateAdded.ToString("MM/dd/yyyy")
+            var roles = _context.Roles.Where(x => x.IsActive == false)
+                                      .Select(x => new RoleDto
+                                      {
+                                          Id = x.Id,
+                                          RoleName = x.RoleName,
+                                          AddedBy = x.AddedBy,
+                                          DateAdded = x.DateAdded.ToString("MM/dd/yyyy")
 
-            }).Where(x => x.IsActive == false)
-            .ToListAsync();
+                                      });
+            return await roles.ToListAsync();
         }
 
 

@@ -1,4 +1,7 @@
 ﻿using ELIXIRETD.DATA.CORE.ICONFIGURATION;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.USER_DTO;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.EXTENSIONS;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.HELPERS;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.STORE_CONTEXT;
 using Microsoft.AspNetCore.Http;
@@ -83,6 +86,56 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
         }
 
 
+        [HttpGet]
+        [Route("GetAllUserWithPagination/{status}")]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsersWithPagination([FromRoute] bool status, [FromQuery] UserParams userParams)
+        {
+            var user = await _unitOfWork.Users.GetAllUserWithPagination(status, userParams);
+
+            Response.AddPaginationHeader(user.CurrentPage, user.PageSize, user.TotalCount, user.TotalPages, user.HasNextPage, user.HasPreviousPage);
+
+            var userResult = new
+            {
+                user,
+                user.CurrentPage,
+                user.PageSize,
+                user.TotalCount,
+                user.TotalPages,
+                user.HasNextPage,
+                user.HasPreviousPage
+            };
+
+            return Ok(userResult);
+        }
+
+        [HttpGet]
+        [Route("GetAllUserWithPaginationOrig/{status}")]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsersWithPaginationOrig([FromRoute] bool status, [FromQuery] UserParams userParams, [FromQuery] string search)
+        {
+
+            if (search == null)
+
+                return await GetAllUsersWithPagination(status, userParams);
+
+            var user = await _unitOfWork.Users.GetAllUserWithPaginationOrig(userParams, status, search);
+
+
+            Response.AddPaginationHeader(user.CurrentPage, user.PageSize, user.TotalCount, user.TotalPages, user.HasNextPage, user.HasPreviousPage);
+
+            var userResult = new
+            {
+                user,
+                user.CurrentPage,
+                user.PageSize,
+                user.TotalCount,
+                user.TotalPages,
+                user.HasNextPage,
+                user.HasPreviousPage
+            };
+
+            return Ok(userResult);
+        }
+
 
         //------------DEPARTMENT
 
@@ -141,6 +194,56 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
             return Ok("Successfully activate department!");
         }
 
+        [HttpGet]
+        [Route("GetAllDepartmentWithPagination/{status}")]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllDepartmentWithPagination([FromRoute] bool status, [FromQuery] UserParams userParams)
+        {
+            var department = await _unitOfWork.Users.GetAllDepartmentWithPagination(status, userParams);
+
+            Response.AddPaginationHeader(department.CurrentPage, department.PageSize, department.TotalCount, department.TotalPages, department.HasNextPage, department.HasPreviousPage);
+
+            var departmentResult = new
+            {
+                department,
+                department.CurrentPage,
+                department.PageSize,
+                department.TotalCount,
+                department.TotalPages,
+                department.HasNextPage,
+                department.HasPreviousPage
+            };
+
+            return Ok(departmentResult);
+        }
+
+
+        [HttpGet]
+        [Route("GetAllDepartmentWithPaginationOrig/{status}")]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllDepartmentWithPaginationOrig([FromRoute] bool status, [FromQuery] UserParams userParams, [FromQuery] string search)
+        {
+
+            if (search == null)
+
+                return await GetAllDepartmentWithPagination(status, userParams);
+
+            var department = await _unitOfWork.Users.GetAllDepartmentWithPaginationOrig(userParams, status, search);
+
+
+            Response.AddPaginationHeader(department.CurrentPage, department.PageSize, department.TotalCount, department.TotalPages, department.HasNextPage, department.HasPreviousPage);
+
+            var departmentResult = new
+            {
+                department,
+                department.CurrentPage,
+                department.PageSize,
+                department.TotalCount,
+                department.TotalPages,
+                department.HasNextPage,
+                department.HasPreviousPage
+            };
+
+            return Ok(departmentResult);
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ELIXIRETD.DATA.CORE.INTERFACES.USER_INTERFACE;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.USER_DTO;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.HELPERS;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.STORE_CONTEXT;
 using Microsoft.EntityFrameworkCore;
@@ -23,39 +24,43 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
 
         public async Task<IReadOnlyList<UserDto>> GetAllActiveUsers()
         {
-            return await _context.Users.Select(x => new UserDto
-            {
-                 Id = x.Id,
-                 FullName = x.FullName, 
-                 UserName = x.UserName, 
-                 Password = x.Password,
-                 UserRoleId = x.UserRoleId, 
-                 UserRole = x.UserRole.RoleName, 
-                 Department = x.Department.DepartmentName, 
-                 DepartmentId = x.DepartmentId,
-                 DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
-                 IsActive = x.IsActive 
-            }).Where(x => x.IsActive == true)
-              .ToListAsync();
+            var user = _context.Users.Where(x => x.IsActive == true)
+                                     .Select(x => new UserDto
+                                     {
+                                         Id = x.Id,
+                                         FullName = x.FullName,
+                                         UserName = x.UserName,
+                                         Password = x.Password,
+                                         UserRoleId = x.UserRoleId,
+                                         UserRole = x.UserRole.RoleName,
+                                         Department = x.Department.DepartmentName,
+                                         DepartmentId = x.DepartmentId,
+                                         DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                         IsActive = x.IsActive
+                                     });
+
+            return await user.ToListAsync();
             
         }
 
         public async Task<IReadOnlyList<UserDto>> GetAllInActiveUsers()
         {
-            return await _context.Users.Select(x => new UserDto
-            {
-                Id = x.Id,
-                FullName = x.FullName,
-                UserName = x.UserName,
-                Password = x.Password,
-                UserRoleId = x.UserRoleId,
-                UserRole = x.UserRole.RoleName,
-                Department = x.Department.DepartmentName,
-                DepartmentId = x.DepartmentId,
-                DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
-                IsActive = x.IsActive
-            }).Where(x => x.IsActive == false)
-            .ToListAsync();
+            var user = _context.Users.Where(x => x.IsActive == false)
+                                    .Select(x => new UserDto
+                                    {
+                                        Id = x.Id,
+                                        FullName = x.FullName,
+                                        UserName = x.UserName,
+                                        Password = x.Password,
+                                        UserRoleId = x.UserRoleId,
+                                        UserRole = x.UserRole.RoleName,
+                                        Department = x.Department.DepartmentName,
+                                        DepartmentId = x.DepartmentId,
+                                        DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                        IsActive = x.IsActive
+                                    });
+
+            return await user.ToListAsync();
 
         }
 
@@ -102,35 +107,85 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
             return true;
         }
 
+        public async Task<PagedList<UserDto>> GetAllUserWithPagination(bool status, UserParams userParams)
+        {
+
+            var users = _context.Users
+                                      .Select(x => new UserDto
+                                        {
+                                            Id = x.Id,
+                                            FullName = x.FullName,
+                                            UserName = x.UserName,
+                                            Password = x.Password,
+                                            UserRoleId = x.UserRoleId, 
+                                            UserRole = x.UserRole.RoleName,
+                                            Department = x.Department.DepartmentName,
+                                            DepartmentId = x.DepartmentId,
+                                            DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                            IsActive = x.IsActive
+                                        });
+
+            return await PagedList<UserDto>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
+
+        }
+
+        public async Task<PagedList<UserDto>> GetAllUserWithPaginationOrig(UserParams userParams, bool status, string search)
+        {
+
+            var users = _context.Users.Where(x => x.IsActive == status)
+                                      .Select(x => new UserDto
+                                      {
+                                          Id = x.Id,
+                                          FullName = x.FullName,
+                                          UserName = x.UserName,
+                                          Password = x.Password,
+                                          UserRoleId = x.UserRoleId,
+                                          UserRole = x.UserRole.RoleName,
+                                          Department = x.Department.DepartmentName,
+                                          DepartmentId = x.DepartmentId,
+                                          DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                          IsActive = x.IsActive
+                                      }).Where(x => x.IsActive == status)
+                                        .Where(x => x.UserName.ToLower()
+                                        .Contains(search.Trim().ToLower()));
+
+            return await PagedList<UserDto>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
+        }
+
 
         //--------------DEPARTMENT
 
 
         public async Task<IReadOnlyList<DepartmentDto>> GetAllActiveDepartment()
         {
-            return await _context.Departments.Select(x => new DepartmentDto
-            {
-                Id = x.Id,
-                DepartmentName = x.DepartmentName,
-                AddedBy = x.AddedBy,
-                DateAdded = x.DateAdded.ToString("MM/dd/yyyy")
+            var department = _context.Departments.Where(x => x.IsActive == true)
+                                                 .Select(x => new DepartmentDto
+                                                 {
+                                                     Id = x.Id,
+                                                     DepartmentName = x.DepartmentName,
+                                                     AddedBy = x.AddedBy,
+                                                     DateAdded = x.DateAdded.ToString("MM/dd/yyyy")
 
-            }).Where(x => x.IsActive == true)
-              .ToListAsync();
+                                                 });
+
+            return await department.ToListAsync();
             
         }
 
         public async Task<IReadOnlyList<DepartmentDto>> GetAllInActiveDepartment()
         {
-            return await _context.Departments.Select(x => new DepartmentDto
-            {
-                Id = x.Id,
-                DepartmentName = x.DepartmentName,
-                AddedBy = x.AddedBy,
-                DateAdded = x.DateAdded.ToString("MM/dd/yyyy")
+            var department = _context.Departments.Where(x => x.IsActive == false)
+                                                 .Select(x => new DepartmentDto
+                                                 {
+                                                     Id = x.Id,
+                                                     DepartmentName = x.DepartmentName,
+                                                     AddedBy = x.AddedBy,
+                                                     DateAdded = x.DateAdded.ToString("MM/dd/yyyy")
 
-            }).Where(x => x.IsActive == false)
-           .ToListAsync();
+                                                 });
+
+            return await department.ToListAsync();
+
         }
 
         public async Task<bool> AddNewDepartment(Department department)
@@ -198,6 +253,39 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
         public async Task<bool> ValidateDepartmentCodeExist(string code)
         {
             return await _context.Departments.AnyAsync(x => x.DepartmentCode == code);
+        }
+
+        public async Task<PagedList<DepartmentDto>> GetAllDepartmentWithPagination(bool status, UserParams userParams)
+        {
+            var department = _context.Departments.Where(x => x.IsActive == status)
+                                                 .Select(x => new DepartmentDto
+                                                 {
+                                                     DepartmentCode = x.DepartmentCode,
+                                                     DepartmentName = x.DepartmentName,
+                                                     AddedBy = x.AddedBy,
+                                                     DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                                     IsActive = x.IsActive
+                                                 });
+
+               return await PagedList<DepartmentDto>.CreateAsync(department, userParams.PageNumber, userParams.PageSize);
+        }
+
+        public async Task<PagedList<DepartmentDto>> GetAllDepartmentWithPaginationOrig(UserParams userParams, bool status, string search)
+        {
+            var department = _context.Departments
+                                                .Select(x => new DepartmentDto
+                                                {
+                                                    DepartmentCode = x.DepartmentCode,
+                                                    DepartmentName = x.DepartmentName,
+                                                    AddedBy = x.AddedBy,
+                                                    DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                                    IsActive = x.IsActive
+                                                }).Where(x => x.IsActive == status)
+                                                  .Where(x => x.DepartmentName.ToLower()
+                                                  .Contains(search.Trim().ToLower()));
+
+            return await PagedList<DepartmentDto>.CreateAsync(department, userParams.PageNumber, userParams.PageSize);
+
         }
     }
 }

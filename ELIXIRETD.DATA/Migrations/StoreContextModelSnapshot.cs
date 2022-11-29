@@ -53,6 +53,73 @@ namespace ELIXIRETD.DATA.Migrations
                     b.ToTable("Departments");
                 });
 
+            modelBuilder.Entity("ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL.MainMenu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AddedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MenuPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModuleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MainMenus");
+                });
+
+            modelBuilder.Entity("ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL.Module", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AddedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MainMenuId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ModuleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubMenuName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MainMenuId");
+
+                    b.ToTable("Modules");
+                });
+
             modelBuilder.Entity("ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL.User", b =>
                 {
                     b.Property<int>("Id")
@@ -154,6 +221,17 @@ namespace ELIXIRETD.DATA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RoleModules");
+                });
+
+            modelBuilder.Entity("ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL.Module", b =>
+                {
+                    b.HasOne("ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL.MainMenu", "MainMenu")
+                        .WithMany()
+                        .HasForeignKey("MainMenuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MainMenu");
                 });
 
             modelBuilder.Entity("ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL.User", b =>

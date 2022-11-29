@@ -13,6 +13,8 @@ namespace ELIXIRETD.DATA.CORE.ICONFIGURATION
 
         IRoleRepository Roles { get; }
 
+        IModuleRepository Modules { get; }
+
         Task CompleteAsync();
     }
 }

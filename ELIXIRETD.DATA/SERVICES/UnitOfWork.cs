@@ -18,6 +18,7 @@ namespace ELIXIRETD.DATA.SERVICES
 
         public IRoleRepository Roles { get; private set; }
 
+        public IModuleRepository Modules { get; private set; }
 
         public UnitOfWork(StoreContext context)
   
@@ -26,6 +27,7 @@ namespace ELIXIRETD.DATA.SERVICES
 
             Users = new UserRepository(_context);
             Roles = new RoleRepository(_context);
+            Modules = new ModuleRepository(_context);
 
         }
 
