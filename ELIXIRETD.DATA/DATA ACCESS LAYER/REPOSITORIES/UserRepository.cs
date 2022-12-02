@@ -36,7 +36,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
                                          Department = x.Department.DepartmentName,
                                          DepartmentId = x.DepartmentId,
                                          DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
-                                         IsActive = x.IsActive
+                                         IsActive = x.IsActive,
+                                         AddedBy = x.AddedBy
                                      });
 
             return await user.ToListAsync();
@@ -57,7 +58,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
                                         Department = x.Department.DepartmentName,
                                         DepartmentId = x.DepartmentId,
                                         DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
-                                        IsActive = x.IsActive
+                                        IsActive = x.IsActive,
+                                        AddedBy = x.AddedBy 
                                     });
 
             return await user.ToListAsync();
@@ -110,7 +112,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
         public async Task<PagedList<UserDto>> GetAllUserWithPagination(bool status, UserParams userParams)
         {
 
-            var users = _context.Users
+            var users = _context.Users.Where(x => x.IsActive == status)
                                       .Select(x => new UserDto
                                         {
                                             Id = x.Id,
@@ -122,7 +124,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
                                             Department = x.Department.DepartmentName,
                                             DepartmentId = x.DepartmentId,
                                             DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
-                                            IsActive = x.IsActive
+                                            IsActive = x.IsActive,
+                                            AddedBy = x.AddedBy
                                         });
 
             return await PagedList<UserDto>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
@@ -144,7 +147,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
                                           Department = x.Department.DepartmentName,
                                           DepartmentId = x.DepartmentId,
                                           DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
-                                          IsActive = x.IsActive
+                                          IsActive = x.IsActive,
+                                          AddedBy = x.AddedBy
                                       }).Where(x => x.IsActive == status)
                                         .Where(x => x.UserName.ToLower()
                                         .Contains(search.Trim().ToLower()));
@@ -260,6 +264,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
             var department = _context.Departments.Where(x => x.IsActive == status)
                                                  .Select(x => new DepartmentDto
                                                  {
+                                                     Id = x.Id,
                                                      DepartmentCode = x.DepartmentCode,
                                                      DepartmentName = x.DepartmentName,
                                                      AddedBy = x.AddedBy,
@@ -272,15 +277,16 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
 
         public async Task<PagedList<DepartmentDto>> GetAllDepartmentWithPaginationOrig(UserParams userParams, bool status, string search)
         {
-            var department = _context.Departments
-                                                .Select(x => new DepartmentDto
+            var department = _context.Departments.Where(x => x.IsActive == status)
+                                                 .Select(x => new DepartmentDto
                                                 {
+                                                    Id = x.Id, 
                                                     DepartmentCode = x.DepartmentCode,
                                                     DepartmentName = x.DepartmentName,
                                                     AddedBy = x.AddedBy,
                                                     DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
                                                     IsActive = x.IsActive
-                                                }).Where(x => x.IsActive == status)
+                                                })
                                                   .Where(x => x.DepartmentName.ToLower()
                                                   .Contains(search.Trim().ToLower()));
 

@@ -1,4 +1,7 @@
 ﻿using ELIXIRETD.DATA.CORE.ICONFIGURATION;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.USER_DTO;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.EXTENSIONS;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.HELPERS;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -73,6 +76,58 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
             return Ok("Successfully activate role!");
         }
 
+
+        [HttpGet]
+        [Route("GetAllRoleWithPagination/{status}")]
+        public async Task<ActionResult<IEnumerable<RoleDto>>> GetAllRoleWithPagination([FromRoute] bool status, [FromQuery] UserParams userParams)
+        {
+            var role = await _unitOfWork.Roles.GetAllRoleWithPagination(status, userParams);
+
+            Response.AddPaginationHeader(role.CurrentPage, role.PageSize, role.TotalCount, role.TotalPages, role.HasNextPage, role.HasPreviousPage);
+
+            var roleResult = new
+            {
+                role,
+                role.CurrentPage,
+                role.PageSize,
+                role.TotalCount,
+                role.TotalPages,
+                role.HasNextPage,
+                role.HasPreviousPage
+            };
+
+            return Ok(roleResult);
+        }
+
+
+
+        [HttpGet]
+        [Route("GetAllRoleWithPaginationOrig/{status}")]
+        public async Task<ActionResult<IEnumerable<RoleDto>>> GetAllRoleWithPaginationOrig([FromRoute] bool status, [FromQuery] UserParams userParams, [FromQuery] string search)
+        {
+
+            if (search == null)
+
+                return await GetAllRoleWithPagination(status, userParams);
+
+            var role = await _unitOfWork.Roles.GetAllRoleWithPaginationOrig(userParams, status, search);
+
+
+            Response.AddPaginationHeader(role.CurrentPage, role.PageSize, role.TotalCount, role.TotalPages, role.HasNextPage, role.HasPreviousPage);
+
+            var roleResult = new
+            {
+                role,
+                role.CurrentPage,
+                role.PageSize,
+                role.TotalCount,
+                role.TotalPages,
+                role.HasNextPage,
+                role.HasPreviousPage
+            };
+
+            return Ok(roleResult);
+        }
 
     }
 }

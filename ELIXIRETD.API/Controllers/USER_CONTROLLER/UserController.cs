@@ -79,7 +79,7 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
         [Route("ActivateUser")]
         public async Task<IActionResult> ActivateUser([FromBody] User user)
         {
-            await _unitOfWork.Users.InActiveUser(user);
+            await _unitOfWork.Users.ActivateUser(user);
             await _unitOfWork.CompleteAsync();
 
             return Ok("Successfully activate user!");
@@ -188,7 +188,7 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
         [Route("ActivateDepartment")]
         public async Task<IActionResult> ActivateDepartment([FromBody] Department department)
         {
-            await _unitOfWork.Users.InActiveDepartment(department);
+            await _unitOfWork.Users.ActivateDepartment(department);
             await _unitOfWork.CompleteAsync();
 
             return Ok("Successfully activate department!");

@@ -1,5 +1,6 @@
 ﻿using ELIXIRETD.DATA.CORE.INTERFACES.USER_INTERFACE;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.USER_DTO;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.HELPERS;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.STORE_CONTEXT;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -93,6 +94,39 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
         public async Task<bool> ValidateRoleExist(string role)
         {
             return await _context.Roles.AnyAsync(x => x.RoleName == role);
+        }
+
+        public async Task<PagedList<RoleDto>> GetAllRoleWithPagination(bool status, UserParams userParams)
+        {
+            var role = _context.Roles.Where(x => x.IsActive == status)
+                                     .Select(x => new RoleDto
+                                     {
+ 
+                                        RoleName = x.RoleName,
+                                        AddedBy = x.AddedBy, 
+                                        DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                        IsActive = x.IsActive
+
+                                     });
+
+            return await PagedList<RoleDto>.CreateAsync(role, userParams.PageNumber, userParams.PageSize);
+        }
+
+        public async Task<PagedList<RoleDto>> GetAllRoleWithPaginationOrig(UserParams userParams, bool status, string search)
+        {
+            var role = _context.Roles.Where(x => x.IsActive == status)
+                                   .Select(x => new RoleDto
+                                   {
+
+                                       RoleName = x.RoleName,
+                                       AddedBy = x.AddedBy,
+                                       DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                       IsActive = x.IsActive
+
+                                   }).Where(x => x.RoleName.ToLower()
+                                     .Contains(search.Trim().ToLower()));
+
+            return await PagedList<RoleDto>.CreateAsync(role, userParams.PageNumber, userParams.PageSize);
         }
     }
 }
