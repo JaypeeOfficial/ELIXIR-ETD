@@ -101,7 +101,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
             var role = _context.Roles.Where(x => x.IsActive == status)
                                      .Select(x => new RoleDto
                                      {
- 
+                                        Id = x.Id, 
                                         RoleName = x.RoleName,
                                         AddedBy = x.AddedBy, 
                                         DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
@@ -117,7 +117,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
             var role = _context.Roles.Where(x => x.IsActive == status)
                                    .Select(x => new RoleDto
                                    {
-
+                                       Id = x.Id,
                                        RoleName = x.RoleName,
                                        AddedBy = x.AddedBy,
                                        DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),

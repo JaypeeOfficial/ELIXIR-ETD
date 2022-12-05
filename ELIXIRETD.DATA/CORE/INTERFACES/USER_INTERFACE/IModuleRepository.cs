@@ -1,4 +1,5 @@
 ﻿using ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.USER_DTO;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.HELPERS;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,13 @@ namespace ELIXIRETD.DATA.CORE.INTERFACES.USER_INTERFACE
         Task<IReadOnlyList<ModuleDto>> GetAllInActiveModules();
         Task<bool> AddNewModule(Module module);
         Task<bool> UpdateModule(Module module);
+        Task<bool> CheckMainMenu(int id);
+        Task<bool> SubMenuNameExist(string module);
+        Task<bool> ModuleNameExist(string module);
+        Task<bool> InActiveModule(Module module);
+        Task<bool> ActivateModule(Module module);
+        Task<PagedList<ModuleDto>> GetAllModulessWithPagination(bool status, UserParams userParams);
+        Task<PagedList<ModuleDto>> GetModulesByStatusWithPaginationOrig(UserParams userParams, bool status, string search);
 
 
 

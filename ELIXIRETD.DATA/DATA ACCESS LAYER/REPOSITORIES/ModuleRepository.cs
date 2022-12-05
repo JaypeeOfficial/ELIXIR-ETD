@@ -1,5 +1,6 @@
 ﻿using ELIXIRETD.DATA.CORE.INTERFACES.USER_INTERFACE;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.USER_DTO;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.HELPERS;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.STORE_CONTEXT;
 using Microsoft.EntityFrameworkCore;
@@ -80,6 +81,84 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
             existingModule.ModuleName = module.ModuleName;
 
             return true;
+
+        }
+
+        public async Task<bool> CheckMainMenu(int id)
+        {
+            var mainMenuResult = await _context.MainMenus.FindAsync(id);
+
+            if (mainMenuResult == null)
+                return false;
+            return true;
+        }
+
+        public async Task<bool> SubMenuNameExist(string module)
+        {
+            return await _context.Modules.AnyAsync(x => x.SubMenuName == module);
+        }
+
+        public async Task<bool> ModuleNameExist(string module)
+        {
+            return await _context.Modules.AnyAsync(x => x.ModuleName == module);
+        }
+
+        public async Task<bool> InActiveModule(Module module)
+        {
+            var existingModule = await _context.Modules.Where(x => x.Id == module.Id)
+                                                       .FirstOrDefaultAsync();
+
+            existingModule.IsActive = false;
+
+            return true;
+        }
+
+        public async Task<bool> ActivateModule(Module module)
+        {
+            var existingModule = await _context.Modules.Where(x => x.Id == module.Id)
+                                                       .FirstOrDefaultAsync();
+
+            existingModule.IsActive = true;
+
+            return true;
+        }
+
+        public async Task<PagedList<ModuleDto>> GetAllModulessWithPagination(bool status, UserParams userParams)
+        {
+            var modules = _context.Modules.Where(x => x.IsActive == status)
+                                          .Select(x => new ModuleDto
+                                          {
+                                              Id = x.Id,
+                                              MainMenu = x.MainMenu.ModuleName,
+                                              MainMenuId = x.MainMenu.Id,
+                                              SubMenuName = x.SubMenuName,
+                                              ModuleName = x.ModuleName,
+                                              DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                              AddedBy = x.AddedBy,
+                                              IsActive = x.IsActive
+
+                                          });
+
+            return await PagedList<ModuleDto>.CreateAsync(modules, userParams.PageNumber, userParams.PageSize);
+        }
+
+        public async Task<PagedList<ModuleDto>> GetModulesByStatusWithPaginationOrig(UserParams userParams, bool status, string search)
+        {
+            var modules = _context.Modules.Where(x => x.IsActive == status)
+                                       .Select(x => new ModuleDto
+                                       {
+                                           Id = x.Id,
+                                           MainMenu = x.MainMenu.ModuleName,
+                                           MainMenuId = x.MainMenu.Id,
+                                           SubMenuName = x.SubMenuName,
+                                           ModuleName = x.ModuleName,
+                                           DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                           AddedBy = x.AddedBy,
+                                           IsActive = x.IsActive
+                                       }).Where(x => x.SubMenuName.ToLower()
+                                         .Contains(search.Trim().ToLower()));
+
+            return await PagedList<ModuleDto>.CreateAsync(modules, userParams.PageNumber, userParams.PageSize);
 
         }
     }
