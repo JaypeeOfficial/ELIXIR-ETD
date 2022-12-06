@@ -61,12 +61,10 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
         }
 
         [HttpPut]
-        [Route("UpdateModule/{id}")]
-        public async Task<IActionResult> UpdateModuleById(int id, [FromBody] Module module)
+        [Route("UpdateModule")]
+        public async Task<IActionResult> UpdateModuleById([FromBody] Module module)
         {
-            if (id != module.Id)
-                return BadRequest();
-
+         
             await _unitOfWork.Modules.UpdateModule(module);
             await _unitOfWork.CompleteAsync();
 
@@ -144,6 +142,80 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
             };
 
             return Ok(moduleResult);
+        }
+
+
+
+
+        //---------------MAIN MENU-------------------
+
+
+        [HttpGet]
+        [Route("GetAllActiveMainMenu")]
+        public async Task<IActionResult> GetAllActiveMainMenu()
+        {
+            var menu = await _unitOfWork.Modules.GetAllActiveMainMenu();
+
+            return Ok(menu);
+        }
+
+
+        [HttpGet]
+        [Route("GetAllInActiveMainMenu")]
+        public async Task<IActionResult> GetAllInActiveMainMenu()
+        {
+            var menu = await _unitOfWork.Modules.GetAllInActiveModules();
+
+            return Ok(menu);
+        }
+
+        [HttpPost]
+        [Route("AddNewMainMenu")]
+        public async Task<IActionResult> AddNewMainMenu(MainMenu menu)
+        {
+
+            if (await _unitOfWork.Modules.MenuAlreadyExist(menu.ModuleName))
+                return BadRequest("Menu Already Exist!, Please try something else!");
+
+            await _unitOfWork.Modules.AddNewMainMenu(menu);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(menu);
+
+        }
+
+
+        [HttpPut]
+        [Route("UpdateMenu")]
+        public async Task<IActionResult> UpdateMenu([FromBody] MainMenu menu)
+        {
+         
+            await _unitOfWork.Modules.UpdateMainMenu(menu);
+            await _unitOfWork.CompleteAsync();
+
+            return Ok(menu);
+        }
+
+
+        [HttpPut]
+        [Route("InActiveMenu")]
+        public async Task<IActionResult> InActiveMenu([FromBody] MainMenu menu)
+        {
+            await _unitOfWork.Modules.InActiveMainMenu(menu);
+            await _unitOfWork.CompleteAsync();
+
+            return new JsonResult("Successfully InActive Menu!");
+        }
+
+        [HttpPut]
+        [Route("ActivateMainMenu")]
+        public async Task<IActionResult> ActivateMenu([FromBody] MainMenu menu)
+        {
+       
+            await _unitOfWork.Modules.ActivateMainMenu(menu);
+            await _unitOfWork.CompleteAsync();
+
+            return new JsonResult("Successfully InActive Menu!");
         }
 
 

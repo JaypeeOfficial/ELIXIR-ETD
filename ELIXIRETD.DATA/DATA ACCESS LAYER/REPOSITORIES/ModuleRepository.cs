@@ -161,5 +161,87 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
             return await PagedList<ModuleDto>.CreateAsync(modules, userParams.PageNumber, userParams.PageSize);
 
         }
+
+
+
+
+        //-------------------MAIN MENU
+         
+
+        public async Task<IReadOnlyList<ModuleDto>> GetAllActiveMainMenu()
+        {
+
+            var module = _context.MainMenus.Where(x => x.IsActive == true)
+                                         .Select(x => new ModuleDto
+                                         {
+                                             Id = x.Id,
+                                             MainMenu = x.ModuleName,
+                                             DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                             AddedBy = x.AddedBy,
+                                             MenuPath = x.MenuPath
+                                         });
+
+            return await module.ToListAsync();
+
+        }
+
+        public async Task<IReadOnlyList<ModuleDto>> GetAllInActiveMainMenu()
+        {
+            var module = _context.MainMenus.Where(x => x.IsActive == false)
+                                       .Select(x => new ModuleDto
+                                       {
+                                           Id = x.Id,
+                                           MainMenu = x.ModuleName,
+                                           DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                           AddedBy = x.AddedBy,
+                                           MenuPath = x.MenuPath
+                                       });
+
+            return await module.ToListAsync();
+
+        }
+
+        public async Task<bool> AddNewMainMenu(MainMenu menu)
+        {
+            await _context.AddAsync(menu);
+
+            return true;
+        }
+
+        public async Task<bool> UpdateMainMenu(MainMenu menu)
+        {
+            var exisitngMenu = await _context.MainMenus.Where(x => x.Id == menu.Id)
+                                                       .FirstOrDefaultAsync();
+
+            exisitngMenu.ModuleName = menu.ModuleName;
+            exisitngMenu.MenuPath = menu.MenuPath;
+
+            return true;
+        }
+
+        public async Task<bool> InActiveMainMenu(MainMenu menu)
+        {
+            var existingMenu = await _context.MainMenus.Where(x => x.Id == menu.Id)
+                                                     .FirstOrDefaultAsync();
+
+            existingMenu.IsActive = false;
+
+            return true;
+        }
+
+        public async Task<bool> ActivateMainMenu(MainMenu menu)
+        {
+            var existingMenu = await _context.MainMenus.Where(x => x.Id == menu.Id)
+                                                 .FirstOrDefaultAsync();
+
+            existingMenu.IsActive = true;
+
+            return true;
+        }
+
+        public async Task<bool> MenuAlreadyExist(string menu)
+        {
+            return await _context.MainMenus.AnyAsync(x => x.ModuleName == menu);
+        }
     }
 }

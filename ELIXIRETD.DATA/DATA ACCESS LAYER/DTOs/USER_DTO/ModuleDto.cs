@@ -13,6 +13,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.USER_DTO
         public int MainMenuId { get; set; }
         public string ModuleName { get; set; }
         public string SubMenuName { get; set; }
+        public string MenuPath { get; set; }
         public string DateAdded { get; set; }
         public string AddedBy { get; set; }
         public bool IsActive { get; set; }

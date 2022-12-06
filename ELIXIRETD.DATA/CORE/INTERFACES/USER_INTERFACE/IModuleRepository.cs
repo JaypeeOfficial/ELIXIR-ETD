@@ -25,6 +25,18 @@ namespace ELIXIRETD.DATA.CORE.INTERFACES.USER_INTERFACE
 
 
 
+
+        Task<IReadOnlyList<ModuleDto>> GetAllActiveMainMenu();
+        Task<IReadOnlyList<ModuleDto>> GetAllInActiveMainMenu();
+        Task<bool> AddNewMainMenu(MainMenu menu);
+        Task<bool> UpdateMainMenu(MainMenu menu);
+        Task<bool> InActiveMainMenu(MainMenu menu);
+        Task<bool> ActivateMainMenu(MainMenu menu);
+        Task<bool> MenuAlreadyExist(string menu);
+
+
+
+
     }
 
 
