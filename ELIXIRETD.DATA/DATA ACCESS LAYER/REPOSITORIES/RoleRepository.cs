@@ -128,5 +128,102 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
 
             return await PagedList<RoleDto>.CreateAsync(role, userParams.PageNumber, userParams.PageSize);
         }
+
+        public async Task<bool> UntagModuleinRole(UserRoleModules rolemodules)
+        {
+            var existingrolemodule = await _context.RoleModules.Where(x => x.ModuleId == rolemodules.ModuleId)
+                                                               .Where(x => x.RoleId == rolemodules.RoleId)
+                                                               .FirstOrDefaultAsync();
+
+            if (existingrolemodule == null)
+                return false;
+
+            existingrolemodule.IsActive = false;
+
+            return true;
+        }
+
+        public async Task<bool> TagModules(UserRoleModules roleModule)
+        {
+            await _context.AddAsync(roleModule);
+            return true;
+        }
+
+        public async Task<bool> TagAndUntagUpdate(UserRoleModules rolemodule)
+        {
+            var rolemoduleStatus = await _context.RoleModules.Where(x => x.ModuleId == rolemodule.ModuleId)
+                                                           .Where(x => x.RoleId == rolemodule.RoleId)
+                                                           .FirstOrDefaultAsync();
+            if (rolemoduleStatus == null)
+                return await TagModules(rolemodule);
+
+            if (rolemoduleStatus != null && rolemoduleStatus.IsActive == false)
+
+                rolemoduleStatus.IsActive = true;
+
+            return true;
+        }
+
+        public async Task<IReadOnlyList<RoleWithModuleDto>> GetRoleModuleById(int id, int menuid)
+        {
+            var rolemodules = from rolemodule in _context.RoleModules
+                              join role in _context.Roles on rolemodule.RoleId equals role.Id
+                              join module in _context.Modules on rolemodule.ModuleId equals module.Id
+                              select new RoleWithModuleDto
+                              {
+                                  RoleName = role.RoleName,
+                                  MainMenu = module.MainMenu.ModuleName,
+                                  MainMenuId = module.MainMenuId,
+                                  MenuPath = module.MainMenu.MenuPath,
+                                  SubMenu = module.SubMenuName,
+                                  ModuleName = module.ModuleName,
+                                  Id = module.Id,
+                                  IsActive = rolemodule.IsActive,
+                                  RoleId = rolemodule.RoleId,
+                              };
+
+            return await rolemodules.Where(x => x.RoleId == id)
+                                    .Where(x => x.IsActive == true)
+                                    .Where(x => x.MainMenuId == menuid)
+                                    .ToListAsync();
+        }
+
+        public async Task<IReadOnlyList<UntagModuleDto>> GetUntagModuleByRoleId(int id, int menuid)
+        {
+            var availablemodule = _context.Modules
+                                                .Where(x => x.MainMenuId == menuid)
+                                                .Where(x => !_context.RoleModules
+                                                .Where(x => x.RoleId == id)
+                                                .Where(x => x.IsActive == true)
+                                                .Select(x => x.ModuleId)
+                                                .Contains(x.Id));
+
+            return await availablemodule
+                                       .Select(rolemodule => new UntagModuleDto
+                                       {
+                                           Remarks = "Untag",
+                                           MainMenu = rolemodule.MainMenu.ModuleName,
+                                           SubMenu = rolemodule.SubMenuName,
+                                           RoleId = id,
+                                           ModuleId = rolemodule.Id,
+                                           IsActive = rolemodule.IsActive,
+
+                                       })
+                                            .Where(x => x.IsActive == true)
+                                            .ToListAsync();
+        }
+
+        public async Task<bool> CheckRoleandTagModules(UserRoleModules rolemodule)
+        {
+            var existingrolemodule = await _context.RoleModules.Where(x => x.RoleId == rolemodule.RoleId)
+                                                               .Where(x => x.ModuleId == rolemodule.ModuleId)
+                                                               .Where(x => x.IsActive == true)
+                                                               .FirstOrDefaultAsync();
+            if (existingrolemodule == null)
+                return true;
+
+
+            return false;
+        }
     }
 }

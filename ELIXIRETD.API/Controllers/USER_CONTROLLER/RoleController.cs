@@ -133,5 +133,61 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
             return Ok(roleResult);
         }
 
+
+        [HttpGet]
+        [Route("GetUntagModuleByRoleId/{id}/{menuid}")]
+        public async Task<IActionResult> GetAllAvailableModule(int id, int menuid)
+
+        {
+            var roles = await _unitOfWork.Roles.GetUntagModuleByRoleId(id, menuid);
+
+            return Ok(roles);
+        }
+
+        [HttpGet]
+        [Route("GetRoleModulebyId/{id}/{menuid}")]
+        public async Task<IActionResult> GetRoleModuleById(int id, int menuid)
+        {
+            var rolemodule = await _unitOfWork.Roles.GetRoleModuleById(id, menuid);
+
+            return Ok(rolemodule);
+        }
+
+
+        [HttpPut]
+        [Route("TagModuleinRole")]
+        public async Task<IActionResult> ActivateTagModuleinRole([FromBody] UserRoleModules[] rolemodule)
+        {
+
+            foreach (UserRoleModules module in rolemodule)
+            {
+
+                var verifyTagModule = await _unitOfWork.Roles.CheckRoleandTagModules(module);
+
+                if (verifyTagModule == false)
+                    return BadRequest("Module already exist!");
+
+                await _unitOfWork.Roles.TagAndUntagUpdate(module);
+                await _unitOfWork.CompleteAsync();
+            }
+            return new JsonResult("Successfully Activated Tag Modules!");
+        }
+
+
+        [HttpPut]
+        [Route("UntagModule")]
+        public async Task<IActionResult> UntagModule([FromBody] UserRoleModules[] rolemodule)
+        {
+
+            foreach (UserRoleModules module in rolemodule)
+            {
+                await _unitOfWork.Roles.UntagModuleinRole(module);
+                await _unitOfWork.CompleteAsync();
+            }
+
+            return new JsonResult("Successfully Untag Module!");
+        }
+
+
     }
 }

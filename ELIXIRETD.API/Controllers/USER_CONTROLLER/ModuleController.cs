@@ -29,7 +29,7 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
 
 
         [HttpGet]
-        [Route("GetAllActiveModules")]
+        [Route("GetAllInActiveModules")]
         public async Task<IActionResult> GetAllIncActiveModules()
         {
             var roles = await _unitOfWork.Modules.GetAllInActiveModules();
@@ -57,7 +57,7 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
                 await _unitOfWork.Modules.AddNewModule(module);
                 await _unitOfWork.CompleteAsync();
 
-                return CreatedAtAction("GetModules", new { module.Id }, module);
+            return Ok(module);
         }
 
         [HttpPut]
@@ -143,9 +143,6 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
 
             return Ok(moduleResult);
         }
-
-
-
 
         //---------------MAIN MENU-------------------
 

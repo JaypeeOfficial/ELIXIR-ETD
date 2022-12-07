@@ -112,7 +112,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
         public async Task<PagedList<UserDto>> GetAllUserWithPagination(bool status, UserParams userParams)
         {
 
-            var users = _context.Users
+            var users = _context.Users.Where(x => x.IsActive == status)
                                       .Select(x => new UserDto
                                         {
                                             Id = x.Id,
@@ -293,5 +293,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
             return await PagedList<DepartmentDto>.CreateAsync(department, userParams.PageNumber, userParams.PageSize);
 
         }
+
+   
     }
 }

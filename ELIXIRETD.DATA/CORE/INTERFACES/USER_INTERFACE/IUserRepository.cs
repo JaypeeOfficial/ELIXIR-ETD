@@ -20,6 +20,7 @@ namespace ELIXIRETD.DATA.CORE.INTERFACES.USER_INTERFACE
         Task<bool> InActiveUser(User user);
         Task<bool> ActivateUser(User user);
 
+
         Task<PagedList<UserDto>> GetAllUserWithPagination(bool status, UserParams userParams);
         Task<PagedList<UserDto>> GetAllUserWithPaginationOrig(UserParams userParams, bool status, string search);
 
