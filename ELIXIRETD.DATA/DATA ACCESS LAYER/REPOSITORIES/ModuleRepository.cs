@@ -243,5 +243,36 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
         {
             return await _context.MainMenus.AnyAsync(x => x.ModuleName == menu);
         }
+
+        public async Task<PagedList<ModuleDto>> GetAllMainMenuWithPagination(bool status, UserParams userParams)
+        {
+            var module = _context.MainMenus.Where(x => x.IsActive == true)
+                                       .Select(x => new ModuleDto
+                                       {
+                                           Id = x.Id,
+                                           MainMenu = x.ModuleName,
+                                           DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                           AddedBy = x.AddedBy,
+                                           MenuPath = x.MenuPath
+                                       });
+
+            return await PagedList<ModuleDto>.CreateAsync(module, userParams.PageNumber, userParams.PageSize);
+        }
+
+        public async Task<PagedList<ModuleDto>> GetMainMenuPaginationOrig(UserParams userParams, bool status, string search)
+        {
+            var module = _context.MainMenus.Where(x => x.IsActive == true)
+                                       .Select(x => new ModuleDto
+                                       {
+                                           Id = x.Id,
+                                           MainMenu = x.ModuleName,
+                                           DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                           AddedBy = x.AddedBy,
+                                           MenuPath = x.MenuPath
+                                       }).Where(x => x.SubMenuName.ToLower()
+                                        .Contains(search.Trim().ToLower()));
+
+            return await PagedList<ModuleDto>.CreateAsync(module, userParams.PageNumber, userParams.PageSize);
+        }
     }
 }

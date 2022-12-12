@@ -26,6 +26,8 @@ namespace ELIXIRETD.DATA.CORE.INTERFACES.USER_INTERFACE
         Task<IReadOnlyList<RoleWithModuleDto>> GetRoleModuleById(int id, int menuid);
         Task<IReadOnlyList<UntagModuleDto>> GetUntagModuleByRoleId(int id, int menuid);
         Task<bool> CheckRoleandTagModules(UserRoleModules rolemodule);
+        Task<IReadOnlyList<RoleWithModuleDto>> GetRoleModuleWithId(int id);
+
 
         Task<PagedList<RoleDto>> GetAllRoleWithPagination(bool status, UserParams userParams);
         Task<PagedList<RoleDto>> GetAllRoleWithPaginationOrig(UserParams userParams, bool status, string search);

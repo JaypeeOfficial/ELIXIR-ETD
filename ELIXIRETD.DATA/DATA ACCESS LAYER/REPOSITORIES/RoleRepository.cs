@@ -225,5 +225,28 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
 
             return false;
         }
+
+        public async Task<IReadOnlyList<RoleWithModuleDto>> GetRoleModuleWithId(int id)
+        {
+            var rolemodules = from rolemodule in _context.RoleModules
+                              join role in _context.Roles on rolemodule.RoleId equals role.Id
+                              join module in _context.Modules on rolemodule.ModuleId equals module.Id
+                              select new RoleWithModuleDto
+                              {
+                                  RoleName = role.RoleName,
+                                  MainMenu = module.MainMenu.ModuleName,
+                                  MainMenuId = module.MainMenuId,
+                                  MenuPath = module.MainMenu.MenuPath,
+                                  SubMenu = module.SubMenuName,
+                                  ModuleName = module.ModuleName,
+                                  Id = module.Id,
+                                  IsActive = rolemodule.IsActive,
+                                  RoleId = rolemodule.RoleId
+                              };
+
+            return await rolemodules.Where(x => x.RoleId == id)
+                                    .Where(x => x.IsActive == true)
+                                    .ToListAsync();
+        }
     }
 }

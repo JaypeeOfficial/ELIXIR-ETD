@@ -189,5 +189,15 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
         }
 
 
+        [HttpGet]
+        [Route("GetRoleModuleWithId/{id}")]
+        public async Task<IActionResult> GetRoleModuleWithId(int id)
+        {
+            var rolemodule = await _unitOfWork.Roles.GetRoleModuleWithId(id);
+
+            return Ok(rolemodule);
+        }
+
+
     }
 }

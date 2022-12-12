@@ -216,5 +216,57 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
         }
 
 
+        [HttpGet]
+        [Route("GetAllMainMenuWithPagination/{status}")]
+        public async Task<ActionResult<IEnumerable<ModuleDto>>> GetAllMainMenuWithPagination([FromRoute] bool status, [FromQuery] UserParams userParams)
+        {
+            var module = await _unitOfWork.Modules.GetAllMainMenuWithPagination(status, userParams);
+
+            Response.AddPaginationHeader(module.CurrentPage, module.PageSize, module.TotalCount, module.TotalPages, module.HasNextPage, module.HasPreviousPage);
+
+            var moduleResult = new
+            {
+                module,
+                module.CurrentPage,
+                module.PageSize,
+                module.TotalCount,
+                module.TotalPages,
+                module.HasNextPage,
+                module.HasPreviousPage
+            };
+
+            return Ok(moduleResult);
+        }
+
+        [HttpGet]
+        [Route("GetAllMainMenuPaginationOrig/{status}")]
+        public async Task<ActionResult<IEnumerable<ModuleDto>>> GetAllMainMenuPaginationOrig([FromRoute] bool status, [FromQuery] UserParams userParams, [FromQuery] string search)
+        {
+
+            if (search == null)
+
+                return await GetAllMainMenuWithPagination(status, userParams);
+
+            var module = await _unitOfWork.Modules.GetMainMenuPaginationOrig(userParams, status, search);
+
+
+            Response.AddPaginationHeader(module.CurrentPage, module.PageSize, module.TotalCount, module.TotalPages, module.HasNextPage, module.HasPreviousPage);
+
+            var moduleResult = new
+            {
+                module,
+                module.CurrentPage,
+                module.PageSize,
+                module.TotalCount,
+                module.TotalPages,
+                module.HasNextPage,
+                module.HasPreviousPage
+            };
+
+            return Ok(moduleResult);
+        }
+
+
+
     }
 }

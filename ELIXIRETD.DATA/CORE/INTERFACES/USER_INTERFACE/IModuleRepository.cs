@@ -33,7 +33,8 @@ namespace ELIXIRETD.DATA.CORE.INTERFACES.USER_INTERFACE
         Task<bool> InActiveMainMenu(MainMenu menu);
         Task<bool> ActivateMainMenu(MainMenu menu);
         Task<bool> MenuAlreadyExist(string menu);
-
+        Task<PagedList<ModuleDto>> GetAllMainMenuWithPagination(bool status, UserParams userParams);
+        Task<PagedList<ModuleDto>> GetMainMenuPaginationOrig(UserParams userParams, bool status, string search);
 
 
 
