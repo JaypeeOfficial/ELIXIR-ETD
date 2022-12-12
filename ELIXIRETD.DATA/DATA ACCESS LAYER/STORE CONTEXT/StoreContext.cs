@@ -1,4 +1,5 @@
-﻿using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL;
+﻿using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -19,6 +20,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.STORE_CONTEXT
         public virtual DbSet<UserRoleModules> RoleModules { get; set; }
         public virtual DbSet<MainMenu> MainMenus { get; set; }
         public virtual DbSet<Module> Modules { get; set; }
+        public virtual DbSet<Uom> Uoms { get; set; }
+
 
 
 

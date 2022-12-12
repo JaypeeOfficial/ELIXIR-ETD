@@ -1,4 +1,5 @@
-﻿using ELIXIRETD.DATA.CORE.INTERFACES.USER_INTERFACE;
+﻿using ELIXIRETD.DATA.CORE.INTERFACES.SETUP_INTERFACE;
+using ELIXIRETD.DATA.CORE.INTERFACES.USER_INTERFACE;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace ELIXIRETD.DATA.CORE.ICONFIGURATION
         IRoleRepository Roles { get; }
 
         IModuleRepository Modules { get; }
+
+        IUomRepository Uoms { get; }
 
         Task CompleteAsync();
     }

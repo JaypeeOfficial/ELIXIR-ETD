@@ -1,6 +1,8 @@
 ﻿using ELIXIRETD.DATA.CORE.ICONFIGURATION;
+using ELIXIRETD.DATA.CORE.INTERFACES.SETUP_INTERFACE;
 using ELIXIRETD.DATA.CORE.INTERFACES.USER_INTERFACE;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.STORE_CONTEXT;
 using System;
 using System.Collections.Generic;
@@ -20,6 +22,8 @@ namespace ELIXIRETD.DATA.SERVICES
 
         public IModuleRepository Modules { get; private set; }
 
+        public IUomRepository Uoms { get; private set; }
+
         public UnitOfWork(StoreContext context)
   
         {
@@ -28,6 +32,7 @@ namespace ELIXIRETD.DATA.SERVICES
             Users = new UserRepository(_context);
             Roles = new RoleRepository(_context);
             Modules = new ModuleRepository(_context);
+            Uoms = new UomRepository(_context);
 
         }
 
