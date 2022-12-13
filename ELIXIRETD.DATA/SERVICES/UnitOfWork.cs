@@ -24,6 +24,9 @@ namespace ELIXIRETD.DATA.SERVICES
 
         public IUomRepository Uoms { get; private set; }
 
+        public IMaterialRepository Materials { get; set; }
+
+
         public UnitOfWork(StoreContext context)
   
         {

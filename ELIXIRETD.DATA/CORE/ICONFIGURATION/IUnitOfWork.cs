@@ -18,6 +18,8 @@ namespace ELIXIRETD.DATA.CORE.ICONFIGURATION
 
         IUomRepository Uoms { get; }
 
+        IMaterialRepository Materials { get; }
+
         Task CompleteAsync();
     }
 }
