@@ -24,6 +24,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.STORE_CONTEXT
         public virtual DbSet<Uom> Uoms { get; set; }
         public virtual DbSet<Material> Materials { get; set; }
         public virtual DbSet<ItemCategory> ItemCategories { get; set; }
+        public virtual DbSet<Supplier> Suppliers { get; set; }
+
 
 
 

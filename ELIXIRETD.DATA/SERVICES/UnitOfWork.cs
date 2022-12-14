@@ -26,6 +26,7 @@ namespace ELIXIRETD.DATA.SERVICES
 
         public IMaterialRepository Materials { get; set; }
 
+        public ISupplierRepository Suppliers { get; set; }
 
         public UnitOfWork(StoreContext context)
   
@@ -36,6 +37,8 @@ namespace ELIXIRETD.DATA.SERVICES
             Roles = new RoleRepository(_context);
             Modules = new ModuleRepository(_context);
             Uoms = new UomRepository(_context);
+            Materials = new MaterialRepository(_context);
+            Suppliers = new SupplierRepository(_context);
 
         }
 
@@ -43,6 +46,7 @@ namespace ELIXIRETD.DATA.SERVICES
         {
             await _context.SaveChangesAsync();
         }
+
 
         public void Dispose()
         {

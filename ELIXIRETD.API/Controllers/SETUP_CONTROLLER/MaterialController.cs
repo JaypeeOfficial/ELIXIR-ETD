@@ -183,15 +183,13 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
         [Route("AddNewItemCategories")]
         public async Task<IActionResult> CreateNewIteCategories(ItemCategory category)
         {
-
-         
                 if (await _unitOfWork.Materials.ItemCategoryExist(category.ItemCategoryName))
                     return BadRequest("Item Category already Exist!, Please try something else!");
 
                 await _unitOfWork.Materials.AddNewItemCategory(category);
                 await _unitOfWork.CompleteAsync();
 
-                return CreatedAtAction("GetAllRawMaterials", new { category.Id }, category);            
+            return Ok(category);         
         }
 
 

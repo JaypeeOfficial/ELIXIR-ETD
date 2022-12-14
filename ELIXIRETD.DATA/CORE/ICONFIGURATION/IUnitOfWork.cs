@@ -20,6 +20,9 @@ namespace ELIXIRETD.DATA.CORE.ICONFIGURATION
 
         IMaterialRepository Materials { get; }
 
+        ISupplierRepository Suppliers { get; }
+        
+
         Task CompleteAsync();
     }
 }
