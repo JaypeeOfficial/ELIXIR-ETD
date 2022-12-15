@@ -28,6 +28,8 @@ namespace ELIXIRETD.DATA.SERVICES
 
         public ISupplierRepository Suppliers { get; set; }
 
+        public ICustomerRepository Customers { get; set; }
+
         public UnitOfWork(StoreContext context)
   
         {
@@ -39,6 +41,7 @@ namespace ELIXIRETD.DATA.SERVICES
             Uoms = new UomRepository(_context);
             Materials = new MaterialRepository(_context);
             Suppliers = new SupplierRepository(_context);
+            Customers = new CustomerRepository(_context);
 
         }
 

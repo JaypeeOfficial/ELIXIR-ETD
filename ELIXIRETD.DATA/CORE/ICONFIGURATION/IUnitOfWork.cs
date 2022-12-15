@@ -22,6 +22,7 @@ namespace ELIXIRETD.DATA.CORE.ICONFIGURATION
 
         ISupplierRepository Suppliers { get; }
         
+        ICustomerRepository Customers { get; }
 
         Task CompleteAsync();
     }

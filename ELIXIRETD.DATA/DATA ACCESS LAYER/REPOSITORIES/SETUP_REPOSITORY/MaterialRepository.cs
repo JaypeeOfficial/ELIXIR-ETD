@@ -110,7 +110,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
 
         public async Task<PagedList<MaterialDto>> GetAllMaterialWithPagination(bool status, UserParams userParams)
         {
-            var materials = _context.Materials.Where(x => x.IsActive == true)
+            var materials = _context.Materials.Where(x => x.IsActive == status)
                                               .Select(x => new MaterialDto
                                              {
                                                  Id = x.Id,
@@ -129,7 +129,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
 
         public async Task<PagedList<MaterialDto>> GetMaterialWithPaginationOrig(UserParams userParams, bool status, string search)
         {
-            var materials = _context.Materials.Where(x => x.IsActive == true)
+            var materials = _context.Materials.Where(x => x.IsActive == status)
                                             .Select(x => new MaterialDto
                                             {
                                                 Id = x.Id,

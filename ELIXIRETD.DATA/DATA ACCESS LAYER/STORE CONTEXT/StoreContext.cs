@@ -25,8 +25,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.STORE_CONTEXT
         public virtual DbSet<Material> Materials { get; set; }
         public virtual DbSet<ItemCategory> ItemCategories { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
-
-
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<CustomerType> CustomerTypes { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -68,8 +68,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
             var supplier = await _context.Suppliers.Where(x => x.Id == supp.Id)
                                                    .FirstOrDefaultAsync();
 
-            supplier.SupplierName = supplier.SupplierName;
-            supplier.SupplierAddress = supplier.SupplierAddress;
+            supplier.SupplierName = supp.SupplierName;
+            supplier.SupplierAddress = supp.SupplierAddress;
 
             return true;
 
