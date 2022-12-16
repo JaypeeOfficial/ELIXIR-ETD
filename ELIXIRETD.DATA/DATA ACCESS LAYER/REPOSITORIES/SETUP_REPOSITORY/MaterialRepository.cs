@@ -34,10 +34,12 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
                                                   ItemDescription = x.ItemDescription, 
                                                   ItemCategory = x.ItemCategory.ItemCategoryName,
                                                   ItemCategoryId = x.ItemCategoryId, 
+                                                  BufferLevel = x.BufferLevel,
                                                   Uom = x.Uom.UomCode,
                                                   UomId = x.UomId,
                                                   DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
-                                                  AddedBy = x.AddedBy
+                                                  AddedBy = x.AddedBy,
+                                                  IsActive = x.IsActive
                                               });
 
             return await materials.ToListAsync();
@@ -53,10 +55,12 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
                                                  ItemDescription = x.ItemDescription,
                                                  ItemCategory = x.ItemCategory.ItemCategoryName,
                                                  ItemCategoryId = x.ItemCategoryId,
+                                                 BufferLevel = x.BufferLevel,
                                                  Uom = x.Uom.UomCode,
                                                  UomId = x.UomId,
                                                  DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
-                                                 AddedBy = x.AddedBy
+                                                 AddedBy = x.AddedBy,
+                                                 IsActive = x.IsActive 
                                              });
 
             return await materials.ToListAsync();
@@ -118,10 +122,12 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
                                                  ItemDescription = x.ItemDescription,
                                                  ItemCategory = x.ItemCategory.ItemCategoryName,
                                                  ItemCategoryId = x.ItemCategoryId,
+                                                 BufferLevel = x.BufferLevel,
                                                  Uom = x.Uom.UomCode,
                                                  UomId = x.UomId,
                                                  DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
-                                                 AddedBy = x.AddedBy
+                                                 AddedBy = x.AddedBy,
+                                                 IsActive = x.IsActive
                                              });
 
             return await PagedList<MaterialDto>.CreateAsync(materials, userParams.PageNumber, userParams.PageSize);
@@ -137,10 +143,12 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
                                                 ItemDescription = x.ItemDescription,
                                                 ItemCategory = x.ItemCategory.ItemCategoryName,
                                                 ItemCategoryId = x.ItemCategoryId,
+                                                BufferLevel = x.BufferLevel,
                                                 Uom = x.Uom.UomCode,
                                                 UomId = x.UomId,
                                                 DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
-                                                AddedBy = x.AddedBy
+                                                AddedBy = x.AddedBy,
+                                                IsActive = x.IsActive
                                             }).Where(x => x.ItemCode.ToLower()
                                               .Contains(search.Trim().ToLower()));
             
