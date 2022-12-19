@@ -32,6 +32,8 @@ namespace ELIXIRETD.DATA.SERVICES
 
         public ILotRepository Lots { get; set; }
 
+        public IReasonRepository Reasons { get; set; }
+
         public UnitOfWork(StoreContext context)
   
         {
@@ -45,6 +47,7 @@ namespace ELIXIRETD.DATA.SERVICES
             Suppliers = new SupplierRepository(_context);
             Customers = new CustomerRepository(_context);
             Lots = new LotRepository(_context);
+            Reasons = new ReasonRepository(_context);
 
         }
 

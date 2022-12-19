@@ -26,6 +26,8 @@ namespace ELIXIRETD.DATA.CORE.ICONFIGURATION
 
         ILotRepository Lots { get; }
 
+        IReasonRepository Reasons { get; }
+
         Task CompleteAsync();
     }
 }
