@@ -29,7 +29,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
                                          {
                                              Id = x.Id, 
                                              ReasonName = x.ReasonName,
-                                             Menu = x.MainMenu.ModuleName,
+                                             MainMenu = x.MainMenu.ModuleName,
+                                             MainMenuId = x.MainMenuId,
                                              AddedBy = x.AddedBy,
                                              DateAdded = x.DateAdded.ToString("MM/dd/yyyy"), 
                                              IsActive = x.IsActive 
@@ -45,7 +46,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
                                        {
                                            Id = x.Id,
                                            ReasonName = x.ReasonName,
-                                           Menu = x.MainMenu.ModuleName,
+                                           MainMenu = x.MainMenu.ModuleName,
+                                           MainMenuId = x.MainMenuId,
                                            AddedBy = x.AddedBy,
                                            DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
                                            IsActive = x.IsActive
@@ -101,7 +103,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
                                          {
                                              Id = x.Id,
                                              ReasonName = x.ReasonName,
-                                             Menu = x.MainMenu.ModuleName,
+                                             MainMenu = x.MainMenu.ModuleName,
+                                             MainMenuId = x.MainMenuId,
                                              AddedBy = x.AddedBy,
                                              DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
                                              IsActive = x.IsActive
@@ -119,7 +122,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
                                        {
                                            Id = x.Id,
                                            ReasonName = x.ReasonName,
-                                           Menu = x.MainMenu.ModuleName,
+                                           MainMenu = x.MainMenu.ModuleName,
+                                           MainMenuId = x.MainMenuId,
                                            AddedBy = x.AddedBy,
                                            DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
                                            IsActive = x.IsActive
@@ -141,7 +145,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
 
         public async Task<bool> ValidateReasonEntry(Reason reason)
         {
-            var validate = await _context.Reasons.Where(x => x.MenuId == reason.MenuId)
+            var validate = await _context.Reasons.Where(x => x.MainMenuId == reason.MainMenuId)
                                         .Where(x => x.ReasonName == reason.ReasonName)
                                         .ToListAsync();
             if (validate.Count != 0)

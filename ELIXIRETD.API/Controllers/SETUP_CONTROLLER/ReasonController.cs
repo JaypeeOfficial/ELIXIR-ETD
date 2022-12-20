@@ -41,7 +41,7 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
         public async Task<IActionResult> AddNewReason(Reason reason)
         {
 
-            var moduleId = await _unitOfWork.Reasons.ValidateModuleId(reason.MenuId);
+            var moduleId = await _unitOfWork.Reasons.ValidateModuleId(reason.MainMenuId);
 
             var validate = await _unitOfWork.Reasons.ValidateReasonEntry(reason);
 

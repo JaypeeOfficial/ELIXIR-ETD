@@ -28,6 +28,8 @@ namespace ELIXIRETD.DATA.CORE.ICONFIGURATION
 
         IReasonRepository Reasons { get; }
 
+        ICompanyRepository Companies{ get; }
+
         Task CompleteAsync();
     }
 }

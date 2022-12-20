@@ -34,6 +34,8 @@ namespace ELIXIRETD.DATA.SERVICES
 
         public IReasonRepository Reasons { get; set; }
 
+        public ICompanyRepository Companies { get; set; }
+
         public UnitOfWork(StoreContext context)
   
         {
@@ -48,7 +50,7 @@ namespace ELIXIRETD.DATA.SERVICES
             Customers = new CustomerRepository(_context);
             Lots = new LotRepository(_context);
             Reasons = new ReasonRepository(_context);
-
+            Companies = new CompanyRepository(_context);
         }
 
         public async Task CompleteAsync()

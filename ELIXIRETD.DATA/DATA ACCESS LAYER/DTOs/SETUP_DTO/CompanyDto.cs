@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.SETUP_DTO
 {
-    public class ReasonDto
+    public class CompanyDto
     {
 
         public int Id { get; set; }
-        public string MainMenu { get; set; }
-        public int MainMenuId { get; set; }
-        public string ReasonName { get; set; }
-        public string AddedBy { get; set; }
+        public string CompanyCode { get; set; }
+        public string CompanyName { get; set; }
         public bool IsActive { get; set; }
+        public string AddedBy { get; set; }
         public string DateAdded { get; set; }
+
 
 
     }

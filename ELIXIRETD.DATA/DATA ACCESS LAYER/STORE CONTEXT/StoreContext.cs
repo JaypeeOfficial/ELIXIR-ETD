@@ -30,6 +30,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.STORE_CONTEXT
         public virtual DbSet<LotName> LotNames { get; set; }
         public virtual DbSet<LotCategory> LotCategories { get; set; }
         public virtual DbSet<Reason> Reasons { get; set; }
+        public virtual DbSet<Company> Companies { get; set; }
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

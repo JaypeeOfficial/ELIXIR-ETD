@@ -60,7 +60,7 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
 
         [HttpPut]
         [Route("UpdateUom")]
-        public async Task<IActionResult> UpdateModuleById( [FromBody] Uom uom)
+        public async Task<IActionResult> UpdateUom( [FromBody] Uom uom)
         {
      
             await _unitOfWork.Uoms.UpdateUom(uom);
@@ -71,7 +71,7 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
 
         [HttpPut]
         [Route("InActiveUom")]
-        public async Task<IActionResult> InActiveModule([FromBody] Uom uom)
+        public async Task<IActionResult> InActiveUom([FromBody] Uom uom)
         {
         
             await _unitOfWork.Uoms.InActiveUom(uom);
