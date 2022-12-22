@@ -21,6 +21,7 @@ namespace ELIXIRETD.DATA.CORE.INTERFACES.SETUP_INTERFACE
         Task<PagedList<CompanyDto>> GetCompanyWithPaginationOrig(UserParams userParams, bool status, string search);
 
 
+        Task<bool> CompanyCodeExist(string company);
 
     }
 }

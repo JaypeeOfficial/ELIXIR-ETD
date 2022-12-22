@@ -43,6 +43,9 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
         public async Task<IActionResult> AddNewCompany(Company company)
         {
 
+            if (await _unitOfWork.Companies.CompanyCodeExist(company.CompanyCode))
+                return BadRequest("Company code already exist, please try something else!");
+
             await _unitOfWork.Companies.AddCompany(company);
             await _unitOfWork.CompleteAsync();
 

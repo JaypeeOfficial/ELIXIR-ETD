@@ -30,6 +30,10 @@ namespace ELIXIRETD.DATA.CORE.ICONFIGURATION
 
         ICompanyRepository Companies{ get; }
 
+        IAccountRepository Accounts { get; }
+
+        ILocationRepository Locations { get; }
+                                           
         Task CompleteAsync();
     }
 }

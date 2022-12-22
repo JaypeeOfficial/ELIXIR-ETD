@@ -135,6 +135,10 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
             return await PagedList<CompanyDto>.CreateAsync(companies, userParams.PageNumber, userParams.PageSize);
         }
 
-     
+        public async Task<bool> CompanyCodeExist(string company)
+        {
+            return await _context.Companies.AnyAsync(x => x.CompanyCode == company);
+        }
+
     }
 }
