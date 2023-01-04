@@ -1,4 +1,5 @@
-﻿using ELIXIRETD.DATA.CORE.INTERFACES.SETUP_INTERFACE;
+﻿using ELIXIRETD.DATA.CORE.INTERFACES.IMPORT_INTERFACE;
+using ELIXIRETD.DATA.CORE.INTERFACES.SETUP_INTERFACE;
 using ELIXIRETD.DATA.CORE.INTERFACES.USER_INTERFACE;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,8 @@ namespace ELIXIRETD.DATA.CORE.ICONFIGURATION
         IAccountRepository Accounts { get; }
 
         ILocationRepository Locations { get; }
+
+        IPoSummaryRepository Imports { get; }
                                            
         Task CompleteAsync();
     }

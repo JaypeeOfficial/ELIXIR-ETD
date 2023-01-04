@@ -100,6 +100,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<SupplierDto>> GetAllSupplierWithPagination(bool status, UserParams userParams)
         {
             var supplier = _context.Suppliers.Where(x => x.IsActive == status)
+                                             .OrderByDescending(x => x.DateAdded)
                                          .Select(x => new SupplierDto
                                          {
                                              Id = x.Id,
@@ -119,6 +120,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<SupplierDto>> GetSupplierWithPaginationOrig(UserParams userParams, bool status, string search)
         {
             var supplier = _context.Suppliers.Where(x => x.IsActive == status)
+                                             .OrderByDescending(x => x.DateAdded)
                                       .Select(x => new SupplierDto
                                       {
                                           Id = x.Id,

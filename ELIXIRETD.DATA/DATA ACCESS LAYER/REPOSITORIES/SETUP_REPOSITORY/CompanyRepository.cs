@@ -103,6 +103,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<CompanyDto>> GetAllCompanyWithPagination(bool status, UserParams userParams)
         {
             var companies = _context.Companies.Where(x => x.IsActive == status)
+                                              .OrderByDescending(x => x.DateAdded)
                                              .Select(x => new CompanyDto
                                              {
                                                  Id = x.Id,
@@ -120,6 +121,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<CompanyDto>> GetCompanyWithPaginationOrig(UserParams userParams, bool status, string search)
         {
             var companies = _context.Companies.Where(x => x.IsActive == status)
+                                              .OrderByDescending(x => x.DateAdded)
                                              .Select(x => new CompanyDto
                                              {
                                                  Id = x.Id,

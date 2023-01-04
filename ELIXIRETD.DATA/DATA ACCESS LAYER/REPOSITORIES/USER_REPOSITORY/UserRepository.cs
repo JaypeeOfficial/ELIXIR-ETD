@@ -113,6 +113,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
         {
 
             var users = _context.Users.Where(x => x.IsActive == status)
+                                      .OrderByDescending(x => x.DateAdded)
                                       .Select(x => new UserDto
                                         {
                                             Id = x.Id,
@@ -135,7 +136,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
         public async Task<PagedList<UserDto>> GetAllUserWithPaginationOrig(UserParams userParams, bool status, string search)
         {
 
-            var users = _context.Users
+            var users = _context.Users.OrderByDescending(x => x.DateAdded)
                                       .Select(x => new UserDto
                                       {
                                           Id = x.Id,

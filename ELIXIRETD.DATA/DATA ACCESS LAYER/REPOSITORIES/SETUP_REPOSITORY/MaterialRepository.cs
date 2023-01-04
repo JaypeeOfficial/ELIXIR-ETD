@@ -115,6 +115,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<MaterialDto>> GetAllMaterialWithPagination(bool status, UserParams userParams)
         {
             var materials = _context.Materials.Where(x => x.IsActive == status)
+                                              .OrderBy(x => x.ItemCode)
                                               .Select(x => new MaterialDto
                                              {
                                                  Id = x.Id,
@@ -136,6 +137,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<MaterialDto>> GetMaterialWithPaginationOrig(UserParams userParams, bool status, string search)
         {
             var materials = _context.Materials.Where(x => x.IsActive == status)
+                                              .OrderBy(x => x.ItemCode)
                                             .Select(x => new MaterialDto
                                             {
                                                 Id = x.Id,
@@ -233,6 +235,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<ItemCategoryDto>> GetAllItemCategoryWithPagination(bool status, UserParams userParams)
         {
             var categories = _context.ItemCategories.Where(x => x.IsActive == status)
+                                                    .OrderByDescending(x => x.DateAdded)
                                                      .Select(x => new ItemCategoryDto
                                                      {
                                                          Id = x.Id,
@@ -248,6 +251,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<ItemCategoryDto>> GetItemCategoryWithPaginationOrig(UserParams userParams, bool status, string search)
         {
             var categories = _context.ItemCategories.Where(x => x.IsActive == status)
+                                                    .OrderByDescending(x => x.DateAdded)
                                                      .Select(x => new ItemCategoryDto
                                                      {
                                                          Id = x.Id,

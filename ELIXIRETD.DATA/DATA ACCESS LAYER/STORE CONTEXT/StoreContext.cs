@@ -1,4 +1,5 @@
 ﻿using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.IMPORT_MODEL;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.SETUP_MODEL;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.USER_MODEL;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,8 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.STORE_CONTEXT
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<PoSummary> PoSummaries { get; set; }
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

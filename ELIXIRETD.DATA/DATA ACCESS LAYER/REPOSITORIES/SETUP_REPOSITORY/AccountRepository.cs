@@ -100,6 +100,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<AccountDto>> GetAllAccountWithPagination(bool status, UserParams userParams)
         {
             var accounts = _context.Accounts.Where(x => x.IsActive == status)
+                                            .OrderByDescending(x => x.DateAdded)       
                                            .Select(x => new AccountDto
                                            {
                                                Id = x.Id,
@@ -118,6 +119,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<AccountDto>> GetAccountWithPaginationOrig(UserParams userParams, bool status, string search)
         {
             var accounts = _context.Accounts.Where(x => x.IsActive == status)
+                                            .OrderByDescending(x => x.DateAdded)
                                          .Select(x => new AccountDto
                                          {
                                              Id = x.Id,

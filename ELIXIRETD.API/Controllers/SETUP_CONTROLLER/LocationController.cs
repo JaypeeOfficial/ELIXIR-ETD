@@ -31,7 +31,7 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
         [Route("GetAllInActiveLocations")]
         public async Task<IActionResult> GetAllInActiveLocations()
         {
-            var location = await _unitOfWork.Locations.GetAllActiveLocation();
+            var location = await _unitOfWork.Locations.GetAllInActiveLocation();
 
             return Ok(location);
         }
@@ -78,7 +78,7 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
         public async Task<IActionResult> ActivateLocation([FromBody] Location location)
         {
 
-            await _unitOfWork.Locations.InActiveLocation(location);
+            await _unitOfWork.Locations.ActivateLocation(location);
             await _unitOfWork.CompleteAsync();
 
             return new JsonResult("Successfully inactive location!");
@@ -115,9 +115,6 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
 
 
             var location = await _unitOfWork.Locations.GetLocationWithPaginationOrig(userParams, status, search);
-
-            Response.AddPaginationHeader(location.CurrentPage, location.PageSize, location.TotalCount, location.TotalPages, location.HasNextPage, location.HasPreviousPage);
-
 
             Response.AddPaginationHeader(location.CurrentPage, location.PageSize, location.TotalCount, location.TotalPages, location.HasNextPage, location.HasPreviousPage);
 

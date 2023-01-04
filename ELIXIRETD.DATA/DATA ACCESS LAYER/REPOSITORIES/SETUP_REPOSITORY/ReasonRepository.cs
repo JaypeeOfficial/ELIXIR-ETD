@@ -99,6 +99,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<ReasonDto>> GetAllReasonWithPagination(bool status, UserParams userParams)
         {
             var reasons = _context.Reasons.Where(x => x.IsActive == status)
+                                          .OrderByDescending(x => x.DateAdded)
                                          .Select(x => new ReasonDto
                                          {
                                              Id = x.Id,
@@ -118,6 +119,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<ReasonDto>> GetReasonWithPaginationOrig(UserParams userParams, bool status, string search)
         {
             var reasons = _context.Reasons.Where(x => x.IsActive == status)
+                                          .OrderByDescending(x => x.DateAdded)
                                        .Select(x => new ReasonDto
                                        {
                                            Id = x.Id,

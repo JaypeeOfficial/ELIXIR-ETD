@@ -229,6 +229,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<LotCategoryDto>> GetAllLotCategoryWithPagination(bool status, UserParams userParams)
         {
             var lots = _context.LotCategories.Where(x => x.IsActive == status)
+                                             .OrderByDescending(x => x.DateAdded)
                                     .Select(x => new LotCategoryDto
                                     {
                                         Id = x.Id,
@@ -246,6 +247,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<LotCategoryDto>> GetLotCategoryWithPaginationOrig(UserParams userParams, bool status, string search)
         {
             var lots = _context.LotCategories.Where(x => x.IsActive == status)
+                                             .OrderByDescending(x => x.DateAdded)
                                     .Select(x => new LotCategoryDto
                                     {
                                         Id = x.Id,

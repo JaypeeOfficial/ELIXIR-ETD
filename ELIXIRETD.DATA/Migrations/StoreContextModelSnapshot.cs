@@ -22,6 +22,70 @@ namespace ELIXIRETD.DATA.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.IMPORT_MODEL.PoSummary", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AddeedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Billed")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("DateCancelled")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Delivered")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("ImportDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ItemCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ItemDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Ordered")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("PO_Date")
+                        .HasColumnType("Date");
+
+                    b.Property<int>("PO_Number")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PR_Date")
+                        .HasColumnType("Date");
+
+                    b.Property<int>("PR_Number")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Uom")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VendorName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PoSummaries");
+                });
+
             modelBuilder.Entity("ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.SETUP_MODEL.Account", b =>
                 {
                     b.Property<int>("Id")

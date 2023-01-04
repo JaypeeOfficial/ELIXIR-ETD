@@ -96,6 +96,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<UomDto>> GetAllUomWithPagination(bool status, UserParams userParams)
         {
             var uom = _context.Uoms.Where(x => x.IsActive == status)
+                                   .OrderByDescending(x => x.DateAdded)
                                  .Select(x => new UomDto
                                  {
                                      Id = x.Id,
@@ -114,6 +115,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         {
 
             var role = _context.Uoms.Where(x => x.IsActive == status)
+                                    .OrderByDescending(x => x.DateAdded)
                                    .Select(x => new UomDto
                                    {
                                        Id = x.Id,

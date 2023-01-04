@@ -126,6 +126,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
         public async Task<PagedList<ModuleDto>> GetAllModulessWithPagination(bool status, UserParams userParams)
         {
             var modules = _context.Modules.Where(x => x.IsActive == status)
+                                          .OrderByDescending(x => x.DateAdded)
                                           .Select(x => new ModuleDto
                                           {
                                               Id = x.Id,
@@ -145,18 +146,19 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES
         public async Task<PagedList<ModuleDto>> GetModulesByStatusWithPaginationOrig(UserParams userParams, bool status, string search)
         {
             var modules = _context.Modules.Where(x => x.IsActive == status)
-                                       .Select(x => new ModuleDto
-                                       {
-                                           Id = x.Id,
-                                           MainMenu = x.MainMenu.ModuleName,
-                                           MainMenuId = x.MainMenu.Id,
-                                           SubMenuName = x.SubMenuName,
-                                           ModuleName = x.ModuleName,
-                                           DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
-                                           AddedBy = x.AddedBy,
-                                           IsActive = x.IsActive
-                                       }).Where(x => x.SubMenuName.ToLower()
-                                         .Contains(search.Trim().ToLower()));
+                                          .OrderByDescending(x => x.DateAdded)
+                                           .Select(x => new ModuleDto
+                                           {
+                                               Id = x.Id,
+                                               MainMenu = x.MainMenu.ModuleName,
+                                               MainMenuId = x.MainMenu.Id,
+                                               SubMenuName = x.SubMenuName,
+                                               ModuleName = x.ModuleName,
+                                               DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                               AddedBy = x.AddedBy,
+                                               IsActive = x.IsActive
+                                           }).Where(x => x.SubMenuName.ToLower()
+                                             .Contains(search.Trim().ToLower()));
 
             return await PagedList<ModuleDto>.CreateAsync(modules, userParams.PageNumber, userParams.PageSize);
 

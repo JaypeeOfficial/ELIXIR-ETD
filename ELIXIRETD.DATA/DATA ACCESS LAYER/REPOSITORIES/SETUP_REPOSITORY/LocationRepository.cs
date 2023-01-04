@@ -100,6 +100,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<LocationDto>> GetLocationWithPagination(bool status, UserParams userParams)
         {
             var location = _context.Locations.Where(x => x.IsActive == status)
+                                             .OrderByDescending(x => x.DateAdded)
                                            .Select(x => new LocationDto
                                            {
                                                Id = x.Id,
@@ -117,6 +118,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<LocationDto>> GetLocationWithPaginationOrig(UserParams userParams, bool status, string search)
         {
             var location = _context.Locations.Where(x => x.IsActive == status)
+                                             .OrderByDescending(x => x.DateAdded)
                                         .Select(x => new LocationDto
                                         {
                                             Id = x.Id,

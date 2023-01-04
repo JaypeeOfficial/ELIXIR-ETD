@@ -241,6 +241,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<CustomerTypeDto>> GetAllCustomerTypeWithPagination(bool status, UserParams userParams)
         {
             var type = _context.Customers.Where(x => x.IsActive == status)
+                                         .OrderByDescending(x => x.DateAdded)
                                     .Select(x => new CustomerTypeDto
                                     {
                                         Id = x.Id,
@@ -257,6 +258,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
         public async Task<PagedList<CustomerTypeDto>> GetCustomerTypeWithPaginationOrig(UserParams userParams, bool status, string search)
         {
             var type = _context.Customers.Where(x => x.IsActive == status)
+                                         .OrderByDescending(x => x.DateAdded)
                                    .Select(x => new CustomerTypeDto
                                    {
                                        Id = x.Id,
