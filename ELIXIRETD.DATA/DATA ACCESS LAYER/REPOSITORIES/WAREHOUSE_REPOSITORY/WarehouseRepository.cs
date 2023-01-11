@@ -56,16 +56,17 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.WAREHOUSE_REPOSITORY
                              {
                                  Id = posummary.Id,
                                  PoNumber = posummary.PO_Number,
-                                 PoDate = posummary.PO_Date.ToString("MM/dd/yyyy"),
+                                 PoDate = posummary.PO_Date,
                                  PrNumber = posummary.PR_Number,
-                                 PrDate = posummary.PR_Date.ToString("MM/dd/yyyy"),
+                                 PrDate = posummary.PR_Date,
                                  ItemCode = posummary.ItemCode,
                                  ItemDescription = posummary.ItemDescription,
                                  Supplier = posummary.VendorName,
                                  Uom = posummary.Uom,
-                                 QuantityOrdered = posummary.Ordered,    
+                                 QuantityOrdered = posummary.Ordered,
                                  IsActive = posummary.IsActive,
                                  ActualRemaining = 0,
+                                 ActualGood = receive != null && receive.IsActive != false ? receive.ActualDelivered : 0,
 
                              }).GroupBy(x => new
                              {
@@ -80,7 +81,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.WAREHOUSE_REPOSITORY
                                  x.Supplier,
                                  x.QuantityOrdered,
                                  x.IsActive
-             
+
                              })
                                                      .Select(receive => new WarehouseReceivingDto
                                                      {
@@ -96,7 +97,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.WAREHOUSE_REPOSITORY
                                                          QuantityOrdered = receive.Key.QuantityOrdered,
                                                          ActualGood = receive.Sum(x => x.ActualGood),
                                                          ActualRemaining = receive.Key.QuantityOrdered - (receive.Sum(x => x.ActualGood)),
-                                                         IsActive = receive.Key.IsActive,                                   
+                                                         IsActive = receive.Key.IsActive,
                                                      })
                                                      .OrderBy(x => x.PoNumber)
                                                      .Where(x => x.ActualRemaining != 0 && (x.ActualRemaining > 0))
@@ -117,9 +118,9 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.WAREHOUSE_REPOSITORY
                              {
                                  Id = posummary.Id,
                                  PoNumber = posummary.PO_Number,
-                                 PoDate = posummary.PO_Date.ToString("MM/dd/yyyy"),
+                                 PoDate = posummary.PO_Date,
                                  PrNumber = posummary.PR_Number,
-                                 PrDate = posummary.PR_Date.ToString("MM/dd/yyyy"),
+                                 PrDate = posummary.PR_Date,
                                  ItemCode = posummary.ItemCode,
                                  ItemDescription = posummary.ItemDescription,
                                  Supplier = posummary.VendorName,
@@ -127,6 +128,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.WAREHOUSE_REPOSITORY
                                  QuantityOrdered = posummary.Ordered,
                                  IsActive = posummary.IsActive,
                                  ActualRemaining = 0,
+                                 ActualGood = receive != null && receive.IsActive != false ? receive.ActualDelivered : 0,
 
                              }).GroupBy(x => new
                              {
@@ -164,7 +166,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.WAREHOUSE_REPOSITORY
                                                     .Where(x => x.ActualRemaining != 0 && (x.ActualRemaining > 0))
                                                     .Where(x => x.IsActive == true)
                                                     .Where(x => Convert.ToString(x.ItemDescription).ToLower()
-                                                      .Contains(search.Trim().ToLower()));
+                                                    .Contains(search.Trim().ToLower()));
 
             return await PagedList<WarehouseReceivingDto>.CreateAsync(poSummary, userParams.PageNumber, userParams.PageSize);
         }
