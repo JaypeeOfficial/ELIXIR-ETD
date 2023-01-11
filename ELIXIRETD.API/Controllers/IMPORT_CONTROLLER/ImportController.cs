@@ -27,7 +27,7 @@ namespace ELIXIRETD.API.Controllers.IMPORT_CONTROLLER
                 List<PoSummary> duplicateList = new List<PoSummary>();
                 List<PoSummary> availableImport = new List<PoSummary>();
                 List<PoSummary> supplierNotExist = new List<PoSummary>();
-                List<PoSummary> itemcodeNotExist = new List<PoSummary>();
+                List<PoSummary> itemcodeNotExist = new List<PoSummary>(); 
                 List<PoSummary> uomCodeNotExist = new List<PoSummary>();
 
                 foreach (PoSummary items in posummary)

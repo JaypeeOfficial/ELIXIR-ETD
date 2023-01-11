@@ -2,10 +2,13 @@
 using ELIXIRETD.DATA.CORE.INTERFACES.IMPORT_INTERFACE;
 using ELIXIRETD.DATA.CORE.INTERFACES.SETUP_INTERFACE;
 using ELIXIRETD.DATA.CORE.INTERFACES.USER_INTERFACE;
+using ELIXIRETD.DATA.CORE.INTERFACES.WAREHOUSE_INTERFACE;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.IMPORT_REPOSITORY;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.WAREHOUSE_REPOSITORY;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.STORE_CONTEXT;
+using ELIXIRETD.DATA.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +46,8 @@ namespace ELIXIRETD.DATA.SERVICES
         public ILocationRepository Locations { get; set; }
 
         public IPoSummaryRepository Imports { get; set; }
+
+        public IWarehouseReceiveRepository Receives { get; set; }
         public UnitOfWork(StoreContext context)
   
         {
@@ -61,6 +66,7 @@ namespace ELIXIRETD.DATA.SERVICES
             Accounts = new AccountRepository(_context);
             Locations = new LocationRepository(_context);
             Imports = new PoSummaryRepository(_context);
+            Receives = new WarehouseRepository(_context);
         }
 
         public async Task CompleteAsync()
