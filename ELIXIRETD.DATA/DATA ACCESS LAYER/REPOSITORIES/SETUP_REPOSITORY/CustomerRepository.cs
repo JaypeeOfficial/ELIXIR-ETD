@@ -240,25 +240,25 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
 
         public async Task<PagedList<CustomerTypeDto>> GetAllCustomerTypeWithPagination(bool status, UserParams userParams)
         {
-            var type = _context.Customers.Where(x => x.IsActive == status)
-                                         .OrderByDescending(x => x.DateAdded)
-                                    .Select(x => new CustomerTypeDto
-                                    {
-                                        Id = x.Id,
-                                        CustomerName = x.CustomerName,
-                                        AddedBy = x.AddedBy,
-                                        DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
-                                        IsActive = x.IsActive
+            var type = _context.CustomerTypes.Where(x => x.IsActive == status)
+                                             .OrderByDescending(x => x.DateAdded)
+                                            .Select(x => new CustomerTypeDto
+                                            {
+                                                Id = x.Id,
+                                                CustomerName = x.CustomerName,
+                                                AddedBy = x.AddedBy,
+                                                DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
+                                                IsActive = x.IsActive
 
-                                    });
+                                            });
 
             return await PagedList<CustomerTypeDto>.CreateAsync(type, userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<PagedList<CustomerTypeDto>> GetCustomerTypeWithPaginationOrig(UserParams userParams, bool status, string search)
         {
-            var type = _context.Customers.Where(x => x.IsActive == status)
-                                         .OrderByDescending(x => x.DateAdded)
+            var type = _context.CustomerTypes.Where(x => x.IsActive == status)
+                                   .OrderByDescending(x => x.DateAdded)
                                    .Select(x => new CustomerTypeDto
                                    {
                                        Id = x.Id,

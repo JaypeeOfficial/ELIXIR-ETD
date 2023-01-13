@@ -157,7 +157,6 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
                                                  .Select(x => new LotCategoryDto
                                                  {
                                                      Id = x.Id,
-                                                     LotCategoryCode = x.LotCode,
                                                      LotCategoryName = x.LotName,
                                                      AddedBy = x.AddedBy,
                                                      DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
@@ -173,8 +172,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
             var category = _context.LotCategories.Where(x => x.IsActive == false)
                                                .Select(x => new LotCategoryDto
                                                {
-                                                   Id = x.Id,
-                                                   LotCategoryCode = x.LotCode,
+                                                   Id = x.Id,                         
                                                    LotCategoryName = x.LotName,
                                                    AddedBy = x.AddedBy,
                                                    DateAdded = x.DateAdded.ToString("MM/dd/yyyy"),
@@ -233,7 +231,6 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
                                     .Select(x => new LotCategoryDto
                                     {
                                         Id = x.Id,
-                                        LotCategoryCode = x.LotCode,
                                         LotCategoryName = x.LotName,
                                         AddedBy = x.AddedBy,
                                         IsActive = x.IsActive,
@@ -251,7 +248,6 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.SETUP_REPOSITORY
                                     .Select(x => new LotCategoryDto
                                     {
                                         Id = x.Id,
-                                        LotCategoryCode = x.LotCode,
                                         LotCategoryName = x.LotName,
                                         AddedBy = x.AddedBy,
                                         IsActive = x.IsActive,

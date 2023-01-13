@@ -79,7 +79,7 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
         public async Task<IActionResult> ActivateCompany([FromBody] Company company)
         {
       
-            await _unitOfWork.Companies.InActiveCompany(company);
+            await _unitOfWork.Companies.ActivateCompany(company);
             await _unitOfWork.CompleteAsync();
 
             return new JsonResult("Successfully inactive company!");
