@@ -143,7 +143,6 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.WAREHOUSE_REPOSITORY
                                  x.Supplier,
                                  x.QuantityOrdered,
                                  x.IsActive
-
                              })
                                                   .Select(receive => new WarehouseReceivingDto
                                                   {
@@ -183,9 +182,6 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.WAREHOUSE_REPOSITORY
 
             return true;
         }
-
-
-
-
     }
 }
+              

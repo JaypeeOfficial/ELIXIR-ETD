@@ -56,7 +56,7 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
         [Route("UpdateAccount")]
         public async Task<IActionResult> UpdateAccount([FromBody] Account account)
         {
-            await _unitOfWork.Accounts.AddAccount(account);
+            await _unitOfWork.Accounts.UpdateAccount(account);
             await _unitOfWork.CompleteAsync();
 
             return Ok(account);

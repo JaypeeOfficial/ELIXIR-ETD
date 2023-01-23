@@ -201,7 +201,7 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
             await _unitOfWork.Modules.InActiveMainMenu(menu);
             await _unitOfWork.CompleteAsync();
 
-            return new JsonResult("Successfully InActive Menu!");
+            return new JsonResult("Successfully inactive menu!");
         }
 
         [HttpPut]
@@ -212,7 +212,7 @@ namespace ELIXIRETD.API.Controllers.USER_CONTROLLER
             await _unitOfWork.Modules.ActivateMainMenu(menu);
             await _unitOfWork.CompleteAsync();
 
-            return new JsonResult("Successfully InActive Menu!");
+            return new JsonResult("Successfully activate menu!");
         }
 
 
