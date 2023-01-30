@@ -104,7 +104,7 @@ namespace ELIXIRETD.API.Controllers.SETUP_CONTROLLER
                 company.HasNextPage,
                 company.HasPreviousPage
             };
-
+                
             return Ok(companyResult);
         }
 

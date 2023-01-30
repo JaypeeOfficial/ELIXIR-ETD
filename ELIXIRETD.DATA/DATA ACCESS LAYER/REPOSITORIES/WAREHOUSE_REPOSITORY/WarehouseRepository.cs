@@ -1,5 +1,6 @@
 ﻿using ELIXIRETD.DATA.CORE.INTERFACES.WAREHOUSE_INTERFACE;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.IMPORT_DTO;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.USER_DTO;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.WAREHOUSE_DTO;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.HELPERS;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.IMPORT_MODEL;
@@ -34,14 +35,73 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.WAREHOUSE_REPOSITORY
             throw new NotImplementedException();
         }
 
-        public Task<PagedList<WarehouseReceivingDto>> GetAllCancelledPOWithPagination(UserParams userParams)
+        public async Task<PagedList<CancelledPoDto>> GetAllCancelledPOWithPagination(UserParams userParams)
         {
-            throw new NotImplementedException();
+            //var cancelpo = (from posummary in _context.PoSummaries
+            //                join receive in _context.QC_Receiving on posummary.Id equals receive.PO_Summary_Id into leftJ
+            //                from receive in leftJ.DefaultIfEmpty()
+
+
+            //                select new CancelledPoDto
+            //                {
+            //                    Id = posummary.Id,
+            //                    PO_Number = posummary.PO_Number,
+            //                    ItemCode = posummary.ItemCode,
+            //                    ItemDescription = posummary.ItemDescription,
+            //                    Supplier = posummary.VendorName,
+            //                    QuantityOrdered = posummary.Ordered,
+            //                    QuantityCancel = receive != null ? receive.Actual_Delivered : 0,
+            //                    QuantityGood = receive != null ? receive.Actual_Delivered : 0,
+            //                    DateCancelled = posummary.Date_Cancellation.ToString(),
+            //                    Remarks = posummary.Reason,
+            //                    IsActive = posummary.IsActive
+            //                }).Where(x => x.IsActive == false)
+            //                  .Where(x => x.DateCancelled != null)
+            //                  .Where(x => x.Remarks != null);
+
+            var cancelpo = _context.PoSummaries.Where(x => x.IsActive == false)
+                                               .Where(x => x.IsCancelled == true)
+                                               .Where(x => x.Reason != null)
+                                               .Select(x => new CancelledPoDto
+                                               {
+                                                   Id = x.Id,
+                                                   PO_Number = x.PO_Number,
+                                                   ItemCode = x.ItemCode,
+                                                   ItemDescription = x.ItemDescription,
+                                                   Supplier = x.VendorName,
+                                                   //QuantityOrdered = x.Ordered,
+                                                   //QuantityCancel = receive != null ? receive.Actual_Delivered : 0,
+                                                   //QuantityGood = receive != null ? receive.Actual_Delivered : 0,
+                                                   DateCancelled = x.DateCancelled.ToString(),
+                                                   Remarks = x.Reason,
+                                                   IsActive = x.IsActive
+                                               });
+
+            return await PagedList<CancelledPoDto>.CreateAsync(cancelpo, userParams.PageNumber, userParams.PageSize);
         }
 
-        public Task<PagedList<WarehouseReceivingDto>> GetAllCancelledPOWithPaginationOrig(UserParams userParams, string search)
+        public async Task<PagedList<CancelledPoDto>> GetAllCancelledPOWithPaginationOrig(UserParams userParams, string search)
         {
-            throw new NotImplementedException();
+            var cancelpo = _context.PoSummaries.Where(x => x.IsActive == false)
+                                           .Where(x => x.IsCancelled == true)
+                                           .Where(x => x.Reason != null)
+                                           .Select(x => new CancelledPoDto
+                                           {
+                                               Id = x.Id,
+                                               PO_Number = x.PO_Number,
+                                               ItemCode = x.ItemCode,
+                                               ItemDescription = x.ItemDescription,
+                                               Supplier = x.VendorName,
+                                               //QuantityOrdered = x.Ordered,
+                                               //QuantityCancel = receive != null ? receive.Actual_Delivered : 0,
+                                               //QuantityGood = receive != null ? receive.Actual_Delivered : 0,
+                                               DateCancelled = x.DateCancelled.ToString(),
+                                               Remarks = x.Reason,
+                                               IsActive = x.IsActive
+                                           }).Where(x => Convert.ToString(x.PO_Number).ToLower()
+                                             .Contains(search.Trim().ToLower())); 
+
+            return await PagedList<CancelledPoDto>.CreateAsync(cancelpo, userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<PagedList<WarehouseReceivingDto>> GetAllPoSummaryWithPagination(UserParams userParams)
@@ -179,9 +239,154 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.WAREHOUSE_REPOSITORY
             existingPo.IsActive = false;
             existingPo.DateCancelled = DateTime.Now;
             existingPo.Reason = summary.Reason;
+            existingPo.CancelBy = summary.CancelBy;
+            existingPo.IsCancelled = true;
+            existingPo.DateCancelled = DateTime.Now;
+
 
             return true;
         }
+
+        public async Task<PagedList<RejectWarehouseReceivingDto>> RejectRawMaterialsByWarehousePagination(UserParams userParams)
+        {
+            //var qcreceiving = (from posummary in _context.PoSummaries
+            //                   join receive in _context.QC_Receiving on posummary.Id equals receive.PO_Summary_Id
+            //                   select new
+            //                   {
+            //                       Id = receive.Id,
+            //                       PO_Number = posummary.PO_Number,
+            //                       ItemCode = posummary.ItemCode,
+            //                       ItemDescription = posummary.ItemDescription,
+            //                       Supplier = posummary.VendorName,
+            //                       Uom = posummary.UOM,
+            //                       QuantityOrderded = posummary.Ordered
+            //                   });
+
+
+            var warehousereject = (from warehouse in _context.WarehouseReceived
+                                   join rejectwarehouse in _context.WarehouseReject
+                                   on warehouse.Id equals rejectwarehouse.WarehouseReceivingId into leftJ
+                                   from rejectwarehouse in leftJ.DefaultIfEmpty()
+                                   //where warehouse.ConfirmRejectbyWarehouse == true &&
+                                   //warehouse.IsWarehouseReceive == true &&
+                                   //warehouse.ConfirmRejectbyQc == false
+
+                                   //join qc in qcreceiving on warehouse.QcReceivingId equals qc.Id
+
+                                   group rejectwarehouse by new
+                                   {
+                                       warehouse.PoNumber,
+                                       warehouse.ItemCode,
+                                       warehouse.ItemDescription,
+                                       warehouse.Supplier,
+                                       warehouse.Uom,
+                                       warehouse.Id,
+                                       warehouse.ReceivingDate,
+                                       warehouse.TotalReject,
+                                       warehouse.Reason,
+                                       warehouse.ConfirmRejectByWarehouse,
+                                       warehouse.IsWarehouseReceived
+
+                                   } into total
+
+                                   select new RejectWarehouseReceivingDto
+                                   {
+                                       Id = total.Key.Id,
+                                       PO_Number = total.Key.PoNumber,
+                                       ItemCode = total.Key.ItemCode,
+                                       ItemDescription = total.Key.ItemDescription,
+                                       Supplier = total.Key.Supplier,
+                                       Uom = total.Key.Uom,
+                                       //QuantityOrdered = total.Key.QuantityOrderded,
+                                       //ActualGood = total.Key.QuantityGood - total.Sum(x => x.Quantity),
+                                       //QcReceivingId = total.Key.QcReceivingId,   
+                                       ReceivingDate = total.Key.ReceivingDate.ToString(),
+                                       ActualReject = total.Key.TotalReject,
+                                       Remarks = total.Key.Reason,
+                                       //ConfirmRejectByQc = total.Key.ConfirmRejectbyQc,
+                                       //ConfirmRejectByWarehouse = total.Key.ConfirmRejectbyWarehouse,
+                                       //IsWarehouseReceived = total.Key.IsWarehouseReceive
+
+                                   });
+
+            return await PagedList<RejectWarehouseReceivingDto>.CreateAsync(warehousereject, userParams.PageNumber, userParams.PageSize);
+
+
+        }
+
+        public Task<PagedList<RejectWarehouseReceivingDto>> RejectRawMaterialsByWarehousePaginationOrig(UserParams userParams, string search)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> ValidatePoId(int id)
+        {
+            var validateExisting = await _context.PoSummaries.Where(x => x.Id == id)
+                                                           .Where(x => x.IsActive == true)
+                                                           .FirstOrDefaultAsync();
+            if (validateExisting == null)
+                return false;
+
+            return true;
+        }
+
+        public async Task<bool> ValidateActualRemaining(Warehouse_Receiving receiving)
+        {
+            var validateActualRemaining = await (from posummary in _context.PoSummaries
+                                                 join receive in _context.WarehouseReceived on posummary.Id equals receive.PoSummaryId into leftJ
+                                                 from receive in leftJ.DefaultIfEmpty()
+                                                 where posummary.IsActive == true
+                                                 select new PoSummaryChecklistDto
+                                                 {
+                                                     Id = posummary.Id,
+                                                     PO_Number = posummary.PO_Number,
+                                                     ItemCode = posummary.ItemCode,
+                                                     ItemDescription = posummary.ItemDescription,
+                                                     Supplier = posummary.VendorName,
+                                                     UOM = posummary.Uom,
+                                                     QuantityOrdered = posummary.Ordered,
+                                                     ActualGood = receive != null && receive.IsActive != false ? receive.ActualDelivered : 0,
+                                                     IsActive = posummary.IsActive,
+                                                     ActualRemaining = 0,
+                                                     IsQcReceiveIsActive = receive != null ? receive.IsActive : true
+                                                 })
+                                                        .GroupBy(x => new
+                                                        {
+                                                            x.Id,       
+                                                            x.PO_Number,
+                                                            x.ItemCode,
+                                                            x.ItemDescription,
+                                                            x.UOM,
+                                                            x.QuantityOrdered,
+                                                            x.IsActive,
+                                                            x.IsQcReceiveIsActive
+                                                        })
+                                                   .Select(receive => new PoSummaryChecklistDto
+                                                   {
+                                                       Id = receive.Key.Id,
+                                                       PO_Number = receive.Key.PO_Number,
+                                                       ItemCode = receive.Key.ItemCode,
+                                                       ItemDescription = receive.Key.ItemDescription,
+                                                       UOM = receive.Key.UOM,
+                                                       QuantityOrdered = receive.Key.QuantityOrdered,
+                                                       ActualGood = receive.Sum(x => x.ActualGood),
+                                                       ActualRemaining = ((receive.Key.QuantityOrdered + (receive.Key.QuantityOrdered / 100) * 10) - (receive.Sum(x => x.ActualGood))),
+                                                       IsActive = receive.Key.IsActive,
+                                                       IsQcReceiveIsActive = receive.Key.IsQcReceiveIsActive
+                                                   }).Where(x => x.IsQcReceiveIsActive == true)
+                                                     .FirstOrDefaultAsync(x => x.Id == receiving.PoSummaryId);
+
+            if (validateActualRemaining == null)
+                return true;
+
+            if (validateActualRemaining.ActualRemaining < receiving.ActualDelivered)
+                return false;
+
+            return true;
+
+        }
+
+
     }
 }
               
