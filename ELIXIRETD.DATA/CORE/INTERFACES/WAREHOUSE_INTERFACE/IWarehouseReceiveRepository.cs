@@ -15,7 +15,7 @@ namespace ELIXIRETD.DATA.CORE.INTERFACES.WAREHOUSE_INTERFACE
     {
 
         Task<bool> AddNewReceivingDetails(Warehouse_Receiving receive);
-        Task<bool> EditReceivingDetails(Warehouse_Receiving receive);
+        //Task<bool> EditReceivingDetails(Warehouse_Receiving receive);
         Task<bool> CancelPo(PoSummary summary);
         Task<PagedList<WarehouseReceivingDto>> GetAllPoSummaryWithPagination(UserParams userParams);
         Task<PagedList<WarehouseReceivingDto>> GetPoSummaryByStatusWithPaginationOrig(UserParams userParams, string search);

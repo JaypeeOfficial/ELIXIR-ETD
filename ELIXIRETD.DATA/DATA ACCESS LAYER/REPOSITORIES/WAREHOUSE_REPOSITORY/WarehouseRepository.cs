@@ -30,10 +30,10 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.WAREHOUSE_REPOSITORY
 
             return true;
         }
-        public async Task<bool> EditReceivingDetails(Warehouse_Receiving receive)
-        {
-            throw new NotImplementedException();
-        }
+        //public async Task<bool> EditReceivingDetails(Warehouse_Receiving receive)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public async Task<PagedList<CancelledPoDto>> GetAllCancelledPOWithPagination(UserParams userParams)
         {
