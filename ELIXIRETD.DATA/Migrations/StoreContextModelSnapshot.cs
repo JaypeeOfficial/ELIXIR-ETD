@@ -36,6 +36,9 @@ namespace ELIXIRETD.DATA.Migrations
                     b.Property<decimal>("Billed")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("CancelBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("DateCancelled")
                         .HasColumnType("datetime2");
 
@@ -46,6 +49,9 @@ namespace ELIXIRETD.DATA.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsCancelled")
                         .HasColumnType("bit");
 
                     b.Property<string>("ItemCode")
@@ -278,9 +284,6 @@ namespace ELIXIRETD.DATA.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
-
-                    b.Property<string>("LotCode")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LotName")
                         .HasColumnType("nvarchar(max)");
@@ -665,7 +668,19 @@ namespace ELIXIRETD.DATA.Migrations
                     b.Property<decimal>("ActualDelivered")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("ActualGood")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("ActualReceivingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("ConfirmRejectByWarehouse")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsWarehouseReceived")
                         .HasColumnType("bit");
 
                     b.Property<string>("ItemCode")
@@ -695,6 +710,9 @@ namespace ELIXIRETD.DATA.Migrations
                     b.Property<string>("Supplier")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("TotalReject")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("TransactionType")
                         .HasColumnType("nvarchar(max)");
 
@@ -704,6 +722,37 @@ namespace ELIXIRETD.DATA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("WarehouseReceived");
+                });
+
+            modelBuilder.Entity("ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.WAREHOUSE_MODEL.Warehouse_Reject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("RejectedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RejectedDate")
+                        .HasColumnType("Date");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("WarehouseReceivingId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WarehouseReject");
                 });
 
             modelBuilder.Entity("ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.SETUP_MODEL.Customer", b =>

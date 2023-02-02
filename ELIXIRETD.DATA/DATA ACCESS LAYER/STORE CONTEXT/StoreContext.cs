@@ -37,7 +37,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.STORE_CONTEXT
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<PoSummary> PoSummaries { get; set; }
         public virtual DbSet<Warehouse_Receiving> WarehouseReceived { get; set; }
-
+        public virtual DbSet<Warehouse_Reject> WarehouseReject { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
