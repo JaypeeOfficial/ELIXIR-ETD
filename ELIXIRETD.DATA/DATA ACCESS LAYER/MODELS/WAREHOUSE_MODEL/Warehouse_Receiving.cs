@@ -19,7 +19,7 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.WAREHOUSE_MODEL
         public string Supplier { get; set; }
 
         [Column(TypeName = "Date")]
-        public DateTime ReceivingDate { get; set; } = DateTime.Now;
+        public DateTime ReceivingDate { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal ActualDelivered { get; set; }
@@ -38,6 +38,6 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.WAREHOUSE_MODEL
         public bool? IsWarehouseReceived { get; set; }
         public bool? ConfirmRejectByWarehouse { get; set; }
 
-
+        public DateTime ActualReceivingDate { get; set; } = DateTime.Now;
     }
 }

@@ -51,7 +51,7 @@ namespace ELIXIRETD.DATA.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsCancelled")
+                    b.Property<bool?>("IsCancelled")
                         .HasColumnType("bit");
 
                     b.Property<string>("ItemCode")
@@ -670,6 +670,9 @@ namespace ELIXIRETD.DATA.Migrations
 
                     b.Property<decimal>("ActualGood")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("ActualReceivingDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool?>("ConfirmRejectByWarehouse")
                         .HasColumnType("bit");

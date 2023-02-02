@@ -169,6 +169,67 @@ namespace ELIXIRETD.API.Controllers.WAREHOUSE_CONTROLLER
         }
 
 
+        [HttpPut]
+        [Route("ReturnPoInAvailableList")]
+        public async Task<IActionResult> ReturnPoInAvailableList([FromBody] PoSummary summary)
+        {   
+            await _unitOfWork.Receives.ReturnPoInAvailableList(summary);
+            await _unitOfWork.CompleteAsync();
+
+            return new JsonResult("Successfully Returned PO!");
+        }
+
+        [HttpGet]
+        [Route("GetAllReceivedMaterialsPagination")]
+        public async Task<ActionResult<IEnumerable<WarehouseReceivingDto>>> GetAllReceivedMaterialsPagination([FromQuery] UserParams userParams)
+        {
+            var warehouse = await _unitOfWork.Receives.ListOfWarehouseReceivingIdWithPagination(userParams);
+
+            Response.AddPaginationHeader(warehouse.CurrentPage, warehouse.PageSize, warehouse.TotalCount, warehouse.TotalPages, warehouse.HasNextPage, warehouse.HasPreviousPage);
+
+            var warehouseResult = new
+            {
+                warehouse,
+                warehouse.CurrentPage,
+                warehouse.PageSize,
+                warehouse.TotalCount,
+                warehouse.TotalPages,
+                warehouse.HasNextPage,
+                warehouse.HasPreviousPage
+            };
+
+            return Ok(warehouseResult);
+        }
+
+        [HttpGet]
+        [Route("GetAllReceivedMaterialsPaginationOrig")]
+        public async Task<ActionResult<IEnumerable<WarehouseReceivingDto>>> GetAllReceivedMaterialsPaginationOrig([FromQuery] UserParams userParams, [FromQuery] string search)
+        {
+
+            if (search == null)
+
+                return await GetAllReceivedMaterialsPagination(userParams);
+
+            var warehouse = await _unitOfWork.Receives.ListOfWarehouseReceivingIdWithPaginationOrig(userParams, search);
+
+            Response.AddPaginationHeader(warehouse.CurrentPage, warehouse.PageSize, warehouse.TotalCount, warehouse.TotalPages, warehouse.HasNextPage, warehouse.HasPreviousPage);
+
+            var warehouseResult = new
+            {
+                warehouse,
+                warehouse.CurrentPage,
+                warehouse.PageSize,
+                warehouse.TotalCount,
+                warehouse.TotalPages,
+                warehouse.HasNextPage,
+                warehouse.HasPreviousPage
+            };
+
+            return Ok(warehouseResult);
+        }
+
+
+
 
 
 

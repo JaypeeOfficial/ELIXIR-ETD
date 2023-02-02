@@ -1,5 +1,6 @@
 ﻿using ELIXIRETD.DATA.CORE.INTERFACES.WAREHOUSE_INTERFACE;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.IMPORT_DTO;
+using ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.INVENTORY_DTO;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.USER_DTO;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.DTOs.WAREHOUSE_DTO;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.HELPERS;
@@ -7,11 +8,13 @@ using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.IMPORT_MODEL;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.MODELS.WAREHOUSE_MODEL;
 using ELIXIRETD.DATA.DATA_ACCESS_LAYER.STORE_CONTEXT;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 
 namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.WAREHOUSE_REPOSITORY
 {
@@ -386,7 +389,50 @@ namespace ELIXIRETD.DATA.DATA_ACCESS_LAYER.REPOSITORIES.WAREHOUSE_REPOSITORY
 
         }
 
+        public async Task<bool> ReturnPoInAvailableList(PoSummary summary)
+        {
+            var existingInfo = await _context.PoSummaries.Where(x => x.Id == summary.Id)
+                                                       .FirstOrDefaultAsync();
+            if (existingInfo == null)
+                return false;
 
+            existingInfo.IsActive = true;
+            existingInfo.DateCancelled = null;
+            existingInfo.Reason = null;
+
+            return true;
+        }
+
+        public async Task<PagedList<WarehouseReceivingDto>> ListOfWarehouseReceivingIdWithPagination(UserParams userParams)
+        {
+
+            var warehouseInventory = _context.WarehouseReceived.OrderBy(x => x.ActualReceivingDate)
+                .Select(x => new WarehouseReceivingDto
+            {
+
+                Id = x.Id, 
+                ItemCode = x.ItemCode, 
+                ItemDescription = x.ItemDescription, 
+                ActualGood = x.ActualDelivered
+            });
+
+            return await PagedList<WarehouseReceivingDto>.CreateAsync(warehouseInventory, userParams.PageNumber, userParams.PageSize);
+        }
+
+        public async Task<PagedList<WarehouseReceivingDto>> ListOfWarehouseReceivingIdWithPaginationOrig(UserParams userParams, string search)
+        {
+            var warehouseInventory = _context.WarehouseReceived.OrderBy(x => x.ActualReceivingDate)
+               .Select(x => new WarehouseReceivingDto
+               {
+                   Id = x.Id,
+                   ItemCode = x.ItemCode,
+                   ItemDescription = x.ItemDescription,
+                   ActualGood = x.ActualDelivered
+               }).Where(x => x.ItemCode.ToLower()
+                 .Contains(search.Trim().ToLower()));
+
+            return await PagedList<WarehouseReceivingDto>.CreateAsync(warehouseInventory, userParams.PageNumber, userParams.PageSize);
+        }
     }
 }
               
